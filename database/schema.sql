@@ -1,0 +1,11 @@
+-- Mission 4 : ce fichier est un carnet de conception, pas un schéma prêt à importer.
+-- Cible de l'exercice : MySQL dans WampServer sous Windows 11.
+-- Dans phpMyAdmin, sélectionne ta base de test avant tout SQL :
+-- atelier_mosaique, ou le nom choisi ensemble en mission 4.
+-- TODO : choisir les colonnes, types et contraintes avant d'écrire le SQL.
+-- projects : comment identifier un projet et mémoriser son nom ?
+-- images : comment rattacher plusieurs images au même projet ?
+-- Quelles informations distinguent le nom d'origine du nom stocké sur disque ?
+-- Comment conserver dimensions, densité, espacement, arrondi, fond,
+-- transparence, marge et seed lorsque tu arriveras en mission 7 ?
+-- Ne placer ici ni identifiants de connexion, ni données personnelles.

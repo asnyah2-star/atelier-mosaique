@@ -1,0 +1,37 @@
+:root {
+    color-scheme: light;
+    --background: #f7f5ef;
+    --text: #23342d;
+    --focus: #075b43;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 1.5rem;
+    background: var(--background);
+    color: var(--text);
+    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+main {
+    max-width: 46rem;
+    margin-inline: auto;
+}
+
+h1 {
+    line-height: 1.2;
+}
+
+:focus-visible {
+    outline: 0.2rem solid var(--focus);
+    outline-offset: 0.2rem;
+}
+
+/* TODO (mission 3) : présenter tes cartes et ton formulaire, même sur petit écran. */
