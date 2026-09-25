@@ -35,3 +35,20 @@ h1 {
 }
 
 /* TODO (mission 3) : présenter tes cartes et ton formulaire, même sur petit écran. */
+
+.formulaire{display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 9px;
+
+}
+
+.projetReal{
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            width: 100%;
+}
+
+.box{width: 50%;}

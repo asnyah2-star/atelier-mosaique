@@ -1,0 +1,61 @@
+# Atelier de mosaïques — fichiers locaux hors du dépôt partagé
+
+# Fichiers créés par Windows ou lors d'un transfert depuis un autre ordinateur
+Thumbs.db
+Desktop.ini
+.DS_Store
+._*
+
+# Réglages des éditeurs et fichiers temporaires
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.log
+logs/
+*.tmp
+*.temp
+tmp/
+.cache/
+
+# Configuration personnelle et secrets ; seul le modèle est partagé
+/config/*
+!/config/config.example.php
+.env
+.env.*
+!.env.example
+!.env.dist
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+auth.json
+
+# Photos, images de test et caches du générateur
+/storage/projects/*
+!/storage/projects/.gitkeep
+/prototype/IMG_MOSA/*
+!/prototype/IMG_MOSA/.gitkeep
+/prototype/_mosa_cache/
+/IMG_MOSA/
+/_mosa_cache/
+/IMG/
+
+# Exports et sauvegardes ; seul le schéma sans données est partagé
+*.sql
+*.sql.gz
+*.dump
+*.bak
+*.backup
+backups/
+dumps/
+/exports/
+/transfert-local/
+!/database/schema.sql
+
+# Bibliothèque navigateur ajoutée en mission 3 : seule la version retenue est suivie
+!/public/assets/js/vendor/
+/public/assets/js/vendor/*
+!/public/assets/js/vendor/jquery-4.0.0.min.js
