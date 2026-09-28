@@ -1,2 +1,5 @@
 # Aucun fichier du projet n'est ignoré. Les nouveaux fichiers doivent être
 # ajoutés à l'index avec `git add -A` avant le commit.
+
+/config/*
+!/config/config.example.php
