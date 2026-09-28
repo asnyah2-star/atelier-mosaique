@@ -2,6 +2,73 @@
 declare(strict_types=1);
 
 // TODO (mission 3) : construire ici la porte d'entrée de ton atelier. maj 1614
+
+session_start();
+
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$erreur = '';
+$nom = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $tokenRecu = $_POST['csrf_token'] ?? '';
+
+    if (
+        !is_string($tokenRecu)
+        || !hash_equals($_SESSION['csrf_token'], $tokenRecu)
+    ) {
+        http_response_code(403);
+        exit('Demande refusée : jeton de sécurité invalide.');
+    }
+
+    $nomRecu = $_POST['nom'] ?? null;
+
+    if (!is_string($nomRecu)) {
+        $erreur = 'Le nom du projet doit être du texte.';
+    } else {
+        $nom = trim($nomRecu);
+
+        if ($nom === '') {
+            $erreur = 'Saisis un nom pour le projet.';
+        } elseif (mb_strlen($nom, 'UTF-8') > 150) {
+            $erreur = 'Le nom ne peut pas dépasser 150 caractères.';
+        }
+    }
+
+    if ($erreur === '') {
+        require_once __DIR__ . '/../src/connexion.php';
+
+        $requete = $pdo->prepare(
+            'INSERT INTO projects (name) VALUES (:name)'
+        );
+        $requete->execute(['name' => $nom]);
+
+        header('Location: index.php');
+        exit;
+    }
+}
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//     $tokenRecu = $_POST['csrf_token'] ?? '';
+
+//     if (
+//         !is_string($tokenRecu)
+//         || !hash_equals($_SESSION['csrf_token'], $tokenRecu)
+//     ) {
+//         http_response_code(403);
+//         exit('Demande refusée : jeton de sécurité invalide.');
+//     }
+// }
+
+require_once __DIR__ . '/../src/connexion.php';
+
+$requeteProjets = $pdo->query(
+    'SELECT name FROM projects ORDER BY id'
+);
+$projets = $requeteProjets->fetchAll();
+
 ?>
 <!doctype html>
 <html lang="fr">
@@ -22,36 +89,62 @@ declare(strict_types=1);
         <!-- TODO : ajouter tes projets fictifs et ton formulaire en mission 3. -->
     </main>
 
-<main class="projetReal">
+    <main class="projetReal">
+        <!-- État 1 : il existe des projets -->
+        <!-- <section class="etat-projets card">
+            <h2>Quelques projets</h2>
+            <ul>
+                <li><a href="#">Bruxelles Babel 26</a></li>
+                <li><a href="#">Bruxelles Babel 27</a></li>
+            </ul>
+        </section> -->
 
-    <!-- État 1 : il existe des projets -->
+        <!-- État 2 : aucun projet -->
+        <!-- <section class="etat-vide card">
+            <h2>Aucun projet pour le moment</h2>
+        </section> -->
+        <?php if ($projets !== []): ?>
     <section class="etat-projets card">
         <h2>Quelques projets</h2>
-
         <ul>
-            <li><a href="#">Bruxelles Babel 26</a></li>
-            <li><a href="#">Bruxelles Babel 27</a></li>
+            <?php foreach ($projets as $projet): ?>
+                <li>
+                    <?= htmlspecialchars($projet['name'], ENT_QUOTES, 'UTF-8') ?>
+                </li>
+            <?php endforeach; ?>
         </ul>
     </section>
-
-
-    <!-- État 2 : aucun projet -->
+<?php else: ?>
     <section class="etat-vide card">
         <h2>Aucun projet pour le moment</h2>
     </section>
-<form class="formulaire card">
-    <button type="button" class="btnew">Nouveau projet</button>
-    <label for="nom">Mosaïque Maker</label>
-    <input type="text" id="nom" name="nom">
-    <button type="submit">Valider</button>
-</form>
+<?php endif; ?>
 
-</main>
+        <form class="formulaire card" method="post">
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>"
+            >
+            <button type="button" class="btnew">Nouveau projet</button>
+            <label for="nom">Nom du projet</label>
 
+<?php if ($erreur !== ''): ?>
+    <p id="erreur-nom" role="alert">
+        <?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?>
+    </p>
+<?php endif; ?>
 
-
-
-
-
+<input
+    type="text"
+    id="nom"
+    name="nom"
+    value="<?= htmlspecialchars($nom, ENT_QUOTES, 'UTF-8') ?>"
+>
+            <!-- <label for="nom">Mosaïque Maker</label>
+            <input type="text" id="nom" name="nom"> -->
+            <button type="submit">Valider</button>
+        </form>
+    </main>
 </body>
 </html>
