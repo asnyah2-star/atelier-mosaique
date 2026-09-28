@@ -25,35 +25,30 @@ declare(strict_types=1);
 <main class="projetReal">
 
     <!-- État 1 : il existe des projets -->
-    <section class="etat-projets">
+    <section class="etat-projets card">
         <h2>Quelques projets</h2>
 
         <ul>
             <li><a href="#">Bruxelles Babel 26</a></li>
             <li><a href="#">Bruxelles Babel 27</a></li>
         </ul>
-
-        <button type="button">Nouveau projet</button>
     </section>
 
 
     <!-- État 2 : aucun projet -->
-    <section class="etat-vide">
+    <section class="etat-vide card">
         <h2>Aucun projet pour le moment</h2>
-
-        <p>Commence ton premier projet de mosaïque.</p>
-
-        <button type="button">Nouveau projet</button>
     </section>
-
-</main>
-
-<form class="formulaire">
-    <button type="button">Nouveau projet</button>
+<form class="formulaire card">
+    <button type="button" class="btnew">Nouveau projet</button>
     <label for="nom">Mosaïque Maker</label>
     <input type="text" id="nom" name="nom">
     <button type="submit">Valider</button>
 </form>
+
+</main>
+
+
 
 
 

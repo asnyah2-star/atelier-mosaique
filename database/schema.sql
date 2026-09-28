@@ -9,3 +9,8 @@
 -- Comment conserver dimensions, densité, espacement, arrondi, fond,
 -- transparence, marge et seed lorsque tu arriveras en mission 7 ?
 -- Ne placer ici ni identifiants de connexion, ni données personnelles.
+
+CREATE TABLE projects (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
