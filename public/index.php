@@ -63,9 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // }
 
 require_once __DIR__ . '/../src/connexion.php';
-
+// La boucle pourra alors lire $projet['id'] et $projet['name'].
 $requeteProjets = $pdo->query(
-    'SELECT name FROM projects ORDER BY id'
+    'SELECT id, name FROM projects ORDER BY id'
+    // 'SELECT id, name FROM projects WHERE 1 = 0 ORDER BY id' --> pour tester l'état vide 
 );
 $projets = $requeteProjets->fetchAll();
 
@@ -90,26 +91,16 @@ $projets = $requeteProjets->fetchAll();
     </main>
 
     <main class="projetReal">
-        <!-- État 1 : il existe des projets -->
-        <!-- <section class="etat-projets card">
-            <h2>Quelques projets</h2>
-            <ul>
-                <li><a href="#">Bruxelles Babel 26</a></li>
-                <li><a href="#">Bruxelles Babel 27</a></li>
-            </ul>
-        </section> -->
-
-        <!-- État 2 : aucun projet -->
-        <!-- <section class="etat-vide card">
-            <h2>Aucun projet pour le moment</h2>
-        </section> -->
+        <!-- l’état vide est bien prévu dans ton code -->
         <?php if ($projets !== []): ?>
     <section class="etat-projets card">
         <h2>Quelques projets</h2>
         <ul>
             <?php foreach ($projets as $projet): ?>
                 <li>
-                    <?= htmlspecialchars($projet['name'], ENT_QUOTES, 'UTF-8') ?>
+                    <a href="projet.php?id=<?= (int) $projet['id'] ?>">
+                        <?= htmlspecialchars($projet['name'], ENT_QUOTES, 'UTF-8') ?>
+                    </a>
                 </li>
             <?php endforeach; ?>
         </ul>
