@@ -50,17 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//     $tokenRecu = $_POST['csrf_token'] ?? '';
-
-//     if (
-//         !is_string($tokenRecu)
-//         || !hash_equals($_SESSION['csrf_token'], $tokenRecu)
-//     ) {
-//         http_response_code(403);
-//         exit('Demande refusée : jeton de sécurité invalide.');
-//     }
-// }
 
 require_once __DIR__ . '/../src/connexion.php';
 // La boucle pourra alors lire $projet['id'] et $projet['name'].

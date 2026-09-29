@@ -3,6 +3,10 @@
 // Le moteur de mosaïque et Canvas peut conserver son JavaScript natif.
 // La page de départ fonctionne sans JavaScript.
 
+
+
+
+
 $(document).ready(function () {
 
     $('.formulaire button[type="button"]').on('click', function () {
