@@ -3,3 +3,7 @@
 
 /config/*
 !/config/config.example.php
+
+# Images envoyées par les utilisatrices : ne pas les versionner.
+/storage/projects/*
+!/storage/projects/.gitkeep

@@ -14,3 +14,20 @@ CREATE TABLE projects (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Une ligne par image ; le fichier lui-même reste dans storage/projects/.
+CREATE TABLE images (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    project_id INT NOT NULL,
+    original_name VARCHAR(255) NOT NULL,
+    storage_name VARCHAR(40) NOT NULL UNIQUE,
+    mime_type VARCHAR(50) NOT NULL,
+    size_bytes INT UNSIGNED NOT NULL,
+    width INT UNSIGNED NOT NULL,
+    height INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_images_project
+        FOREIGN KEY (project_id) REFERENCES projects(id)
+        ON DELETE CASCADE,
+    INDEX idx_images_project_id (project_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
