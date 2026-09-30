@@ -209,7 +209,8 @@ $stockerUneImage = static function (array $fichier, int $projetId) use ($pdo): a
 };
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
+    // Un ancien api.js en cache envoyait le formulaire de renommage sans action.
+    $action = $_POST['action'] ?? (isset($_POST['nom']) ? 'renommer' : '');
     $tokenRecu = $_POST['csrf_token'] ?? '';
 
     if (
@@ -397,6 +398,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     } else {
+        if ($estAjax) {
+            $repondreJson(
+                ['success' => false, 'message' => 'Action inconnue. Recharge la page et réessaie.'],
+                400
+            );
+        }
+
         http_response_code(400);
         exit('Action inconnue.');
     }
