@@ -29,6 +29,25 @@ if ($projet === false) {
     exit('Projet introuvable. <a href="index.php">Retour à l’accueil</a>');
 }
 
+$mosaiqueW = max(320, min(8000, (int) ($_GET['w'] ?? 1400)));
+$mosaiqueH = max(240, min(8000, (int) ($_GET['h'] ?? 900)));
+$mosaiqueMode = $_GET['mode'] ?? 'normal';
+if (!is_string($mosaiqueMode) || !in_array($mosaiqueMode, ['dense', 'normal', 'aere'], true)) {
+    $mosaiqueMode = 'normal';
+}
+$mosaiqueSeed = $_GET['seed'] ?? '';
+if (!is_string($mosaiqueSeed) || ($mosaiqueSeed !== '' && !ctype_digit($mosaiqueSeed))) {
+    $mosaiqueSeed = '';
+}
+$mosaiqueGap = max(0, min(60, (int) ($_GET['gap'] ?? 8)));
+$mosaiqueRadius = max(0, min(120, (int) ($_GET['radius'] ?? 12)));
+$mosaiqueMargin = max(0, min(800, (int) ($_GET['margin'] ?? 0)));
+$mosaiqueBg = $_GET['bg'] ?? '#12121a';
+if (!is_string($mosaiqueBg) || !preg_match('/\A#[0-9a-fA-F]{6}\z/', $mosaiqueBg)) {
+    $mosaiqueBg = '#12121a';
+}
+$mosaiqueTransparent = ($_GET['bg_transparent'] ?? '') === '1';
+
 $erreur = '';
 $messageImage = '';
 $resultatsUpload = [];
@@ -204,6 +223,8 @@ $stockerUneImage = static function (array $fichier, int $projetId) use ($pdo): a
         'success' => true,
         'image_id' => $imageId,
         'name' => $nomOriginal !== '' ? $nomOriginal : 'image',
+        'src' => 'image.php?id=' . $imageId . '&project_id=' . $projetId . '&thumb=1&max=1200',
+        'ar' => $hauteur > 0 ? $largeur / $hauteur : 1,
         'message' => 'Enregistrée dans ce projet.',
     ];
 };
@@ -411,10 +432,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 // liste les images liées au projet ouvert et affiche un message si la galerie est vide.
 $requeteImages = $pdo->prepare(
-    'SELECT id, original_name FROM images WHERE project_id = :project_id ORDER BY id DESC'
+    'SELECT id, original_name, width, height FROM images WHERE project_id = :project_id ORDER BY id DESC'
+    // sélectionne que les images liées au projet ouvert, puis transmet au JavaScript leur nom, leurs proportions et une URL.
 );
 $requeteImages->execute(['project_id' => $id]);
 $images = $requeteImages->fetchAll();
+$donneesMosaique = array_map(
+    static function (array $image) use ($id): array {
+        $imageId = (int) $image['id'];
+        $largeur = (int) $image['width'];
+        $hauteur = (int) $image['height'];
+
+        return [
+            'src' => 'image.php?id=' . $imageId . '&project_id=' . $id . '&thumb=1&max=1200',
+            'ar' => $hauteur > 0 ? $largeur / $hauteur : 1,
+            'name' => (string) $image['original_name'],
+        ];
+    },
+    $images
+);
 ?>
 <!doctype html>
 <html lang="fr">
@@ -422,14 +458,80 @@ $images = $requeteImages->fetchAll();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= htmlspecialchars($projet['name'], ENT_QUOTES, 'UTF-8') ?></title>
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/vendor/jquery-4.0.0.min.js" defer></script>
     <script src="assets/js/api.js" defer></script>
     <script src="assets/js/app.js" defer></script>
 </head>
 <body>
+    <script id="donnees-mosaique" type="application/json"><?= json_encode(
+        $donneesMosaique,
+        JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE
+    ) ?></script>
     <main>
         <h1><?= htmlspecialchars($projet['name'], ENT_QUOTES, 'UTF-8') ?></h1>
         <p>Projet numéro <?= (int) $projet['id'] ?></p>
+
+        <section class="mosaic-tool" aria-labelledby="titre-mosaique">
+            <h2 id="titre-mosaique">Créer une mosaïque</h2>
+            <?php if ($images === []): ?>
+                <p role="status">Ajoute au moins une image au projet pour créer une mosaïque.</p>
+            <?php endif; ?>
+
+            <form class="mosaic-panel" method="get" action="projet.php">
+                <input type="hidden" name="id" value="<?= (int) $id ?>">
+                <div class="mosaic-field">
+                    <label for="w">Largeur (pixels)</label>
+                    <input id="w" name="w" type="number" min="320" max="8000" value="<?= $mosaiqueW ?>">
+                </div>
+                <div class="mosaic-field">
+                    <label for="h">Hauteur (pixels)</label>
+                    <input id="h" name="h" type="number" min="240" max="8000" value="<?= $mosaiqueH ?>">
+                </div>
+                <fieldset class="mosaic-field">
+                    <legend>Densité</legend>
+                    <label><input type="radio" name="mode" value="dense"<?= $mosaiqueMode === 'dense' ? ' checked' : '' ?>> Dense</label>
+                    <label><input type="radio" name="mode" value="normal"<?= $mosaiqueMode === 'normal' ? ' checked' : '' ?>> Normale</label>
+                    <label><input type="radio" name="mode" value="aere"<?= $mosaiqueMode === 'aere' ? ' checked' : '' ?>> Aérée</label>
+                </fieldset>
+                <div class="mosaic-field">
+                    <label for="seed">Seed (optionnelle)</label>
+                    <input id="seed" name="seed" type="text" inputmode="numeric" placeholder="Automatique" value="<?= htmlspecialchars($mosaiqueSeed, ENT_QUOTES, 'UTF-8') ?>">
+                </div>
+                <div class="mosaic-field">
+                    <label for="gap">Espacement (pixels)</label>
+                    <input id="gap" name="gap" type="number" min="0" max="60" value="<?= $mosaiqueGap ?>">
+                </div>
+                <div class="mosaic-field">
+                    <label for="radius">Arrondi (pixels)</label>
+                    <input id="radius" name="radius" type="number" min="0" max="120" value="<?= $mosaiqueRadius ?>">
+                </div>
+                <div class="mosaic-field">
+                    <label for="margin">Marge du PNG (pixels)</label>
+                    <input id="margin" name="margin" type="number" min="0" max="800" value="<?= $mosaiqueMargin ?>">
+                </div>
+                <div class="mosaic-field">
+                    <label for="bg">Couleur du fond</label>
+                    <input id="bg" name="bg" type="text" value="<?= htmlspecialchars($mosaiqueBg, ENT_QUOTES, 'UTF-8') ?>" pattern="#[0-9a-fA-F]{6}">
+                    <input id="bg_color" type="color" value="<?= htmlspecialchars($mosaiqueBg, ENT_QUOTES, 'UTF-8') ?>" aria-label="Choisir la couleur du fond">
+                    <label><input id="bg_transparent" type="checkbox" name="bg_transparent" value="1"<?= $mosaiqueTransparent ? ' checked' : '' ?>> Fond transparent</label>
+                </div>
+                <button class="mosaic-button primary" type="submit">Générer l’aperçu</button>
+                <button class="mosaic-button" type="button" id="regenMosaic">Régénérer</button>
+                <button class="mosaic-button" type="button" id="exportPng"<?= $images === [] ? ' disabled' : '' ?>>Exporter en PNG</button>
+            </form>
+
+            <p id="mosaic-message" class="mosaic-hint" role="status" aria-live="polite">
+                <?= $images === [] ? 'Aucune image à disposer pour le moment.' : 'L’aperçu reprend les images de ce projet.' ?>
+            </p>
+            <div class="mosaic-preview-center">
+                <div id="previewViewport">
+                    <div class="mosaic-preview-wrap colored" id="previewWrap">
+                        <div id="gallery"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <form id="form-renommer" method="post">
             <input type="hidden" name="action" value="renommer">

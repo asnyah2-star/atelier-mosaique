@@ -412,7 +412,7 @@ transform: scale(var(--pv-scale)) translateX(-50%);
 	</div>
   </div>
 <script>
-	// ===== Data injectée par PHP =====
+	// ===== Data injectée par PHP  =====
 	const DATA = <?= json_encode($data, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) ?>;
   
 	const W = <?= (int)$W ?>;

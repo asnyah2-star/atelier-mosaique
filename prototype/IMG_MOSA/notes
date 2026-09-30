@@ -1,0 +1,5 @@
+PHP prépare les données des images 
+→ le navigateur charge leurs miniatures 
+→ JavaScript compose l’aperçu → Canvas fabrique le PNG. 
+Dans ton application, les données viennent maintenant des images liées au projet ouvert, 
+et les miniatures passent par image.php
