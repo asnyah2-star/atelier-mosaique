@@ -53,9 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 require_once __DIR__ . '/../src/connexion.php';
 // La boucle pourra alors lire $projet['id'] et $projet['name'].
+// 'SELECT id, name FROM projects WHERE 1 = 0 ORDER BY id' --> pour tester l'état vide 
 $requeteProjets = $pdo->query(
     'SELECT id, name FROM projects ORDER BY id'
-    // 'SELECT id, name FROM projects WHERE 1 = 0 ORDER BY id' --> pour tester l'état vide 
 );
 $projets = $requeteProjets->fetchAll();
 

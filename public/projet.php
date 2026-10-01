@@ -17,7 +17,7 @@ if (!is_string($idRecu) || !ctype_digit($idRecu) || (int) $idRecu < 1) {
 }
 
 $id = (int) $idRecu;
-
+// WHERE project_id = :project_id -> limite la liste aux images du projet ouvert
 $requete = $pdo->prepare(
     'SELECT id, name FROM projects WHERE id = :id'
 );
