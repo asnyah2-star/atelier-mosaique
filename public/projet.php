@@ -18,9 +18,10 @@ if (!is_string($idRecu) || !ctype_digit($idRecu) || (int) $idRecu < 1) {
 
 $id = (int) $idRecu;
 $requete = $pdo->prepare(
-    'SELECT id, name, mosaic_width, mosaic_height, mosaic_mode,
-       mosaic_gap, mosaic_radius, mosaic_bg, mosaic_bg_transparent,
-       mosaic_margin, mosaic_seed
+    'SELECT id, name, 
+    mosaic_width, mosaic_height, mosaic_mode,
+    mosaic_gap, mosaic_radius, mosaic_bg, mosaic_bg_transparent,
+    mosaic_margin, mosaic_seed
     FROM projects
     WHERE id = :id'
 );
@@ -33,23 +34,26 @@ if ($projet === false) {
 }
 
 $mosaiqueW = max(320, min(8000, (int) ($_GET['w'] ?? $projet['mosaic_width'])));
-$mosaiqueH = max(240, min(8000, (int) ($_GET['h'] ?? 900)));
-$mosaiqueMode = $_GET['mode'] ?? 'normal';
+$mosaiqueH = max(240, min(8000, (int) ($_GET['h'] ?? $projet['mosaic_height'])));
+$mosaiqueMode = $_GET['mode'] ?? $projet['mosaic_mode'];
 if (!is_string($mosaiqueMode) || !in_array($mosaiqueMode, ['dense', 'normal', 'aere'], true)) {
     $mosaiqueMode = 'normal';
 }
-$mosaiqueSeed = $_GET['seed'] ?? '';
+$mosaiqueSeed = $_GET['seed']
+    ?? ($projet['mosaic_seed'] === null ? '' : (string) $projet['mosaic_seed']);
 if (!is_string($mosaiqueSeed) || ($mosaiqueSeed !== '' && !ctype_digit($mosaiqueSeed))) {
     $mosaiqueSeed = '';
 }
-$mosaiqueGap = max(0, min(60, (int) ($_GET['gap'] ?? 8)));
-$mosaiqueRadius = max(0, min(120, (int) ($_GET['radius'] ?? 12)));
-$mosaiqueMargin = max(0, min(800, (int) ($_GET['margin'] ?? 0)));
-$mosaiqueBg = $_GET['bg'] ?? '#12121a';
+$mosaiqueGap = max(0, min(60, (int) ($_GET['gap'] ?? $projet['mosaic_gap'])));
+$mosaiqueRadius = max(0, min(120, (int) ($_GET['radius'] ?? $projet['mosaic_radius'])));
+$mosaiqueMargin = max(0, min(800, (int) ($_GET['margin'] ?? $projet['mosaic_margin'])));
+$mosaiqueBg = $_GET['bg'] ?? $projet['mosaic_bg'];
 if (!is_string($mosaiqueBg) || !preg_match('/\A#[0-9a-fA-F]{6}\z/', $mosaiqueBg)) {
     $mosaiqueBg = '#12121a';
 }
-$mosaiqueTransparent = ($_GET['bg_transparent'] ?? '') === '1';
+$mosaiqueTransparent = array_key_exists('w', $_GET)
+    ? (($_GET['bg_transparent'] ?? '') === '1')
+    : ((int) $projet['mosaic_bg_transparent'] === 1);
 
 $erreur = '';
 $messageImage = '';

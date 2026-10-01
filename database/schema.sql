@@ -34,9 +34,11 @@ CREATE TABLE images (
     size_bytes INT UNSIGNED NOT NULL,
     width INT UNSIGNED NOT NULL,
     height INT UNSIGNED NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL 
+    DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_images_project
-        FOREIGN KEY (project_id) REFERENCES projects(id)
-        ON DELETE CASCADE,
+    FOREIGN KEY (project_id) 
+    REFERENCES projects(id)
+    ON DELETE CASCADE,
     INDEX idx_images_project_id (project_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
