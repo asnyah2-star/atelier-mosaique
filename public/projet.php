@@ -17,9 +17,12 @@ if (!is_string($idRecu) || !ctype_digit($idRecu) || (int) $idRecu < 1) {
 }
 
 $id = (int) $idRecu;
-// WHERE project_id = :project_id -> limite la liste aux images du projet ouvert
 $requete = $pdo->prepare(
-    'SELECT id, name FROM projects WHERE id = :id'
+    'SELECT id, name, mosaic_width, mosaic_height, mosaic_mode,
+       mosaic_gap, mosaic_radius, mosaic_bg, mosaic_bg_transparent,
+       mosaic_margin, mosaic_seed
+    FROM projects
+    WHERE id = :id'
 );
 $requete->execute(['id' => $id]);
 $projet = $requete->fetch();
@@ -29,7 +32,7 @@ if ($projet === false) {
     exit('Projet introuvable. <a href="index.php">Retour à l’accueil</a>');
 }
 
-$mosaiqueW = max(320, min(8000, (int) ($_GET['w'] ?? 1400)));
+$mosaiqueW = max(320, min(8000, (int) ($_GET['w'] ?? $projet['mosaic_width'])));
 $mosaiqueH = max(240, min(8000, (int) ($_GET['h'] ?? 900)));
 $mosaiqueMode = $_GET['mode'] ?? 'normal';
 if (!is_string($mosaiqueMode) || !in_array($mosaiqueMode, ['dense', 'normal', 'aere'], true)) {

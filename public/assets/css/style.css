@@ -1,6 +1,6 @@
 :root {
     color-scheme: light;
-    --background: #f7f5ef;
+    --background: #EA8C52;
     --text: #23342d;
     --focus: #075b43;
 }
@@ -25,6 +25,11 @@ main {
     margin-inline: auto;
 }
 
+button{background-color: #075b43;
+color: white;}
+
+a{decoration: none;
+color: #075b43;}
 h1 {
     line-height: 1.2;
 }
@@ -78,7 +83,8 @@ h1 {
     border-radius: 8px;
     cursor: pointer;
 }
-.btnew{font-size: 1.2rem;}
+.btnew{ font-size: 1.2rem;
+}
 
 /* Aperçu du moteur de mosaïque, isolé du reste de la page projet. */
 .mosaic-tool {

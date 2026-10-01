@@ -12,7 +12,16 @@
 
 CREATE TABLE projects (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(150) NOT NULL
+    name VARCHAR(150) NOT NULL,
+    mosaic_width SMALLINT UNSIGNED NOT NULL DEFAULT 1400,
+    mosaic_height SMALLINT UNSIGNED NOT NULL DEFAULT 900,
+    mosaic_mode VARCHAR(10) NOT NULL DEFAULT 'normal',
+    mosaic_gap TINYINT UNSIGNED NOT NULL DEFAULT 8,
+    mosaic_radius SMALLINT UNSIGNED NOT NULL DEFAULT 12,
+    mosaic_bg CHAR(7) NOT NULL DEFAULT '#12121a',
+    mosaic_bg_transparent TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    mosaic_margin SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+    mosaic_seed BIGINT UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Une ligne par image ; le fichier lui-même reste dans storage/projects/.
