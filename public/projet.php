@@ -316,6 +316,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
+} elseif ($action === 'enregistrer_mosaique') {
+        // La validation et l'enregistrement seront ajoutés ici.
     } elseif ($action === 'envoyer_image') {
         $fichiersRecus = $_FILES['images'] ?? null;
         $resultatsUpload = [];
@@ -487,6 +489,11 @@ $donneesMosaique = array_map(
 
             <form class="mosaic-panel" method="get" action="projet.php">
                 <input type="hidden" name="id" value="<?= (int) $id ?>">
+                <input
+                    type="hidden"
+                    id="mosaicCsrfToken"
+                    value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>"
+>
                 <div class="mosaic-field">
                     <label for="w">Largeur (pixels)</label>
                     <input id="w" name="w" type="number" min="320" max="8000" value="<?= $mosaiqueW ?>">
@@ -524,6 +531,7 @@ $donneesMosaique = array_map(
                     <label><input id="bg_transparent" type="checkbox" name="bg_transparent" value="1"<?= $mosaiqueTransparent ? ' checked' : '' ?>> Fond transparent</label>
                 </div>
                 <button class="mosaic-button primary" type="submit">Générer l’aperçu</button>
+                <button class="mosaic-button" type="button" id="saveMosaicSettings">Enregistrer les réglages</button>
                 <button class="mosaic-button" type="button" id="regenMosaic">Régénérer</button>
                 <button class="mosaic-button" type="button" id="exportPng"<?= $images === [] ? ' disabled' : '' ?>>Exporter en PNG</button>
             </form>

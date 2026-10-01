@@ -23,3 +23,25 @@ window.apiEnvoyerImages = function (formData, projectId) {
         contentType: false
     });
 };
+
+window.apiEnregistrerReglagesMosaique = function (donnees) {
+    return $.ajax({
+        url: 'projet.php?id=' + encodeURIComponent(donnees.project_id),
+        method: 'POST',
+        dataType: 'json',
+        data: {
+            action: 'enregistrer_mosaique',
+            project_id: donnees.project_id,
+            w: donnees.w,
+            h: donnees.h,
+            mode: donnees.mode,
+            gap: donnees.gap,
+            radius: donnees.radius,
+            bg: donnees.bg,
+            bg_transparent: donnees.bg_transparent ? '1' : '0',
+            margin: donnees.margin,
+            seed: donnees.seed,
+            csrf_token: donnees.csrf_token
+        }
+    });
+};
