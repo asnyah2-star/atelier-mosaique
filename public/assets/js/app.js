@@ -540,7 +540,52 @@ function scalePreview(){
   
 	  applyPreviewBackgroundLive();
 	}
-  
+
+	$('#saveMosaicSettings').on('click', function () {
+	  const form = document.querySelector('.mosaic-panel');
+	  const button = this;
+	  const message = document.getElementById('mosaic-message');
+	  if (!form || !message) return;
+	  if (!form.reportValidity()) return;
+
+	  const mode = form.querySelector('input[name="mode"]:checked');
+	  const data = {
+	    project_id: form.elements.project_id.value,
+	    csrf_token: document.getElementById('mosaicCsrfToken').value,
+	    w: form.elements.w.value,
+	    h: form.elements.h.value,
+	    mode: mode ? mode.value : '',
+	    gap: form.elements.gap.value,
+	    radius: form.elements.radius.value,
+	    bg: form.elements.bg.value,
+	    bg_transparent: form.elements.bg_transparent.checked,
+	    margin: form.elements.margin.value,
+	    seed: form.elements.seed.value.trim()
+	  };
+
+	  button.disabled = true;
+	  form.setAttribute('aria-busy', 'true');
+	  message.textContent = 'Enregistrement des réglages…';
+
+	  window.apiEnregistrerReglagesMosaique(data)
+	    .done(function (response) {
+	      message.textContent = response.message || 'Réglages enregistrés.';
+	      // Le moteur lit ses dimensions au démarrage. Revenir à l’URL canonique
+	      // recharge les valeurs confirmées par PHP, sans anciens paramètres GET.
+	      window.setTimeout(function () {
+	        window.location.assign('projet.php?id=' + encodeURIComponent(data.project_id));
+	      }, 500);
+	    })
+	    .fail(function (xhr) {
+	      const response = xhr.responseJSON;
+	      message.textContent = response && response.message
+	        ? response.message
+	        : 'Les réglages n’ont pas pu être enregistrés. Vérifie ta connexion et réessaie.';
+	      button.disabled = false;
+	      form.removeAttribute('aria-busy');
+	    });
+	});
+
 	// ===== Boot =====
 	const tool = document.querySelector('.mosaic-tool');
 	tool.style.setProperty('--W', W + 'px');

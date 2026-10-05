@@ -317,7 +317,96 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
 } elseif ($action === 'enregistrer_mosaique') {
-        // La validation et l'enregistrement seront ajoutés ici.
+        $champsEntiers = [
+            'w' => ['colonne' => 'mosaic_width', 'min' => 320, 'max' => 8000],
+            'h' => ['colonne' => 'mosaic_height', 'min' => 240, 'max' => 8000],
+            'gap' => ['colonne' => 'mosaic_gap', 'min' => 0, 'max' => 60],
+            'radius' => ['colonne' => 'mosaic_radius', 'min' => 0, 'max' => 120],
+            'margin' => ['colonne' => 'mosaic_margin', 'min' => 0, 'max' => 800],
+        ];
+        $reglages = [];
+        $erreursReglages = [];
+
+        foreach ($champsEntiers as $champ => $bornes) {
+            $valeur = $_POST[$champ] ?? null;
+            if (!is_string($valeur) || !ctype_digit($valeur)) {
+                $erreursReglages[] = 'Vérifie les valeurs numériques des réglages.';
+                continue;
+            }
+            $nombre = (int) $valeur;
+            if ($nombre < $bornes['min'] || $nombre > $bornes['max']) {
+                $erreursReglages[] = 'Une valeur est en dehors des limites autorisées.';
+                continue;
+            }
+            $reglages[$bornes['colonne']] = $nombre;
+        }
+
+        $mode = $_POST['mode'] ?? null;
+        if (!is_string($mode) || !in_array($mode, ['dense', 'normal', 'aere'], true)) {
+            $erreursReglages[] = 'Choisis une densité proposée.';
+        } else {
+            $reglages['mosaic_mode'] = $mode;
+        }
+
+        $fond = $_POST['bg'] ?? null;
+        if (!is_string($fond) || !preg_match('/\A#[0-9a-fA-F]{6}\z/', $fond)) {
+            $erreursReglages[] = 'La couleur doit être au format #RRGGBB.';
+        } else {
+            $reglages['mosaic_bg'] = $fond;
+        }
+
+        $transparent = $_POST['bg_transparent'] ?? null;
+        if (!is_string($transparent) || !in_array($transparent, ['0', '1'], true)) {
+            $erreursReglages[] = 'La valeur de transparence est invalide.';
+        } else {
+            $reglages['mosaic_bg_transparent'] = (int) $transparent;
+        }
+
+        $seed = $_POST['seed'] ?? null;
+        if (!is_string($seed) || ($seed !== '' && (!ctype_digit($seed) || (float) $seed > 2147483647))) {
+            $erreursReglages[] = 'La seed doit être un entier entre 0 et 2147483647.';
+        } else {
+            $reglages['mosaic_seed'] = $seed === '' ? random_int(0, 2147483647) : (int) $seed;
+        }
+
+        if ($erreursReglages !== []) {
+            $repondreJson([
+                'success' => false,
+                'message' => implode(' ', array_unique($erreursReglages)),
+            ], 422);
+        }
+
+        $miseAJour = $pdo->prepare(
+            'UPDATE projects
+             SET mosaic_width = :width,
+                 mosaic_height = :height,
+                 mosaic_mode = :mode,
+                 mosaic_gap = :gap,
+                 mosaic_radius = :radius,
+                 mosaic_bg = :bg,
+                 mosaic_bg_transparent = :bg_transparent,
+                 mosaic_margin = :margin,
+                 mosaic_seed = :seed
+             WHERE id = :id'
+        );
+        $miseAJour->execute([
+            'width' => $reglages['mosaic_width'],
+            'height' => $reglages['mosaic_height'],
+            'mode' => $reglages['mosaic_mode'],
+            'gap' => $reglages['mosaic_gap'],
+            'radius' => $reglages['mosaic_radius'],
+            'bg' => $reglages['mosaic_bg'],
+            'bg_transparent' => $reglages['mosaic_bg_transparent'],
+            'margin' => $reglages['mosaic_margin'],
+            'seed' => $reglages['mosaic_seed'],
+            'id' => $id,
+        ]);
+
+        $repondreJson([
+            'success' => true,
+            'message' => 'Réglages enregistrés.',
+            'settings' => $reglages,
+        ]);
     } elseif ($action === 'envoyer_image') {
         $fichiersRecus = $_FILES['images'] ?? null;
         $resultatsUpload = [];
