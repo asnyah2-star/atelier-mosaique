@@ -566,7 +566,8 @@ $donneesMosaique = array_map(
         $donneesMosaique,
         JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE
     ) ?></script>
-    <main>
+    <main id="haut-page">
+        <a class="page-action-link" href="index.php">← Retour à l’accueil</a>
         <h1><?= htmlspecialchars($projet['name'], ENT_QUOTES, 'UTF-8') ?></h1>
         <p>Projet numéro <?= (int) $projet['id'] ?></p>
 
@@ -720,26 +721,51 @@ $donneesMosaique = array_map(
             <p id="galerie-vide"<?= $images === [] ? '' : ' hidden' ?>>Aucune image dans ce projet pour le moment.</p>
             <ul id="liste-galerie-images">
                     <?php foreach ($images as $image): ?>
-                        <li>
+                        <li id="image-<?= (int) $image['id'] ?>">
                             <figure>
                                 <img
-                                    src="image.php?id=<?= (int) $image['id'] ?>&amp;project_id=<?= (int) $id ?>"
+                                    src="image.php?id=<?= (int) $image['id'] ?>&amp;project_id=<?= (int) $id ?>&amp;thumb=1&amp;max=1200"
                                     alt="<?= htmlspecialchars($image['original_name'], ENT_QUOTES, 'UTF-8') ?>"
+                                    width="<?= (int) $image['width'] ?>"
+                                    height="<?= (int) $image['height'] ?>"
                                     loading="lazy"
                                 >
                                 <figcaption><?= htmlspecialchars($image['original_name'], ENT_QUOTES, 'UTF-8') ?></figcaption>
                             </figure>
-                            <form method="post">
-                                <input type="hidden" name="action" value="demander_retrait">
-                                <input
-                                    type="hidden"
-                                    name="csrf_token"
-                                    value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>"
-                                >
-                                <input type="hidden" name="project_id" value="<?= (int) $id ?>">
-                                <input type="hidden" name="image_id" value="<?= (int) $image['id'] ?>">
-                                <button type="submit">Retirer cette image</button>
-                            </form>
+                            <div class="image-removal-controls">
+                                <?php if ($confirmationSuppression === null || (int) $confirmationSuppression['id'] !== (int) $image['id']): ?>
+                                    <form method="post" action="projet.php?id=<?= (int) $id ?>#image-<?= (int) $image['id'] ?>">
+                                        <input type="hidden" name="action" value="demander_retrait">
+                                        <input
+                                            type="hidden"
+                                            name="csrf_token"
+                                            value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>"
+                                        >
+                                        <input type="hidden" name="project_id" value="<?= (int) $id ?>">
+                                        <input type="hidden" name="image_id" value="<?= (int) $image['id'] ?>">
+                                        <button type="submit">Retirer cette image</button>
+                                    </form>
+                                <?php endif; ?>
+                                <?php if ($confirmationSuppression !== null && (int) $confirmationSuppression['id'] === (int) $image['id']): ?>
+                                    <div class="image-removal-confirmation" role="group" aria-labelledby="confirmer-retrait-<?= (int) $image['id'] ?>">
+                                        <p id="confirmer-retrait-<?= (int) $image['id'] ?>">
+                                            Retirer « <?= htmlspecialchars($image['original_name'], ENT_QUOTES, 'UTF-8') ?> » de ce projet ?
+                                        </p>
+                                        <form method="post">
+                                            <input type="hidden" name="action" value="supprimer_image">
+                                            <input
+                                                type="hidden"
+                                                name="csrf_token"
+                                                value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>"
+                                            >
+                                            <input type="hidden" name="project_id" value="<?= (int) $id ?>">
+                                            <input type="hidden" name="image_id" value="<?= (int) $image['id'] ?>">
+                                            <button class="button-attention" type="submit" autofocus>Confirmer le retrait</button>
+                                            <a href="projet.php?id=<?= (int) $id ?>">Annuler</a>
+                                        </form>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </li>
                     <?php endforeach; ?>
             </ul>
@@ -751,30 +777,11 @@ $donneesMosaique = array_map(
                 <p role="status"><?= htmlspecialchars($messageSuppression, ENT_QUOTES, 'UTF-8') ?></p>
             <?php endif; ?>
 
-            <?php if ($confirmationSuppression !== null): ?>
-                <section aria-labelledby="titre-confirmer-retrait">
-                    <h3 id="titre-confirmer-retrait">Confirmer le retrait</h3>
-                    <p>
-                        Retirer « <?= htmlspecialchars($confirmationSuppression['original_name'], ENT_QUOTES, 'UTF-8') ?> »
-                        du projet « <?= htmlspecialchars($projet['name'], ENT_QUOTES, 'UTF-8') ?> » ?
-                    </p>
-                    <form method="post">
-                        <input type="hidden" name="action" value="supprimer_image">
-                        <input
-                            type="hidden"
-                            name="csrf_token"
-                            value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>"
-                        >
-                        <input type="hidden" name="project_id" value="<?= (int) $id ?>">
-                        <input type="hidden" name="image_id" value="<?= (int) $confirmationSuppression['id'] ?>">
-                        <button type="submit">Confirmer le retrait</button>
-                        <a href="projet.php?id=<?= (int) $id ?>">Annuler</a>
-                    </form>
-                </section>
-            <?php endif; ?>
         </section>
 
-        <a href="index.php">Retour à l’accueil</a>
+        <p class="page-action-end">
+            <a class="page-action-link" href="#haut-page">↑ Retour en haut</a>
+        </p>
     </main>
 </body>
 </html>

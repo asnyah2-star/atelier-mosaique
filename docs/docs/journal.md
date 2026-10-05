@@ -7,19 +7,43 @@ prochain échange. Actualise cette page à la fin de ta séance.
 
 Le 5 octobre 2026, j'ai refait deux exports PNG sur un projet : un avec un
 fond coloré et une marge de 0 px, puis un avec un fond transparent après avoir
-modifié la largeur et la hauteur. Le téléchargement s'est fait, mais le PNG
-transparent est resté en 1200 × 700 au lieu d'appliquer les nouvelles
-dimensions. Je n'ai pas noté les dimensions demandées. La vérification avec une
-marge supérieure à 0 px reste aussi à faire.
+modifié la largeur et la hauteur. Au premier essai, j'ai exporté sans régénérer
+l'aperçu : le PNG est resté en 1200 × 700. J'ai refait l'essai en cliquant sur
+« Générer l'aperçu » avant l'export ; les nouvelles dimensions ont alors été
+prises en compte. La vérification avec une marge supérieure à 0 px reste à
+faire. D'après notre vérification antérieure, les deux projets de test
+affichaient chacun uniquement leurs propres images ; ce résultat a été
+confirmé de mémoire pendant la reprise de la recette. Le renommage avec
+accents et apostrophe, puis le retour au nom initial, a également été confirmé
+comme réussi. Le retrait d'image avec annulation puis confirmation fonctionne
+bien. Pour rendre les actions importantes plus visibles, une légère pulsation
+a été ajoutée au bouton « Générer l'aperçu » et au bouton de confirmation du
+retrait ; elle est désactivée lorsque la préférence de réduction des
+animations est activée. La demande de confirmation du retrait s'affiche
+maintenant à côté de la photo concernée et du bouton « Retirer cette image ».
+Après le clic sur « Retirer cette image », la page revient sur la vignette
+concernée et met le focus sur « Confirmer le retrait » ; le premier bouton est
+remplacé pendant la confirmation.
+Le lien « Retour à l'accueil » a été placé en haut de la page du projet et un
+bouton « Retour en haut » a été ajouté en bas, avec défilement doux sauf si la
+préférence de réduction des animations est activée. Les images de la galerie
+s'affichent maintenant dans une boîte limitée à 18 rem de large et 16 rem de
+haut ; la page charge une miniature, tandis que l'original reste conservé.
+Après la sélection d'un ou plusieurs fichiers, le bouton « Envoyer les images »
+attire maintenant l'attention avec la même légère pulsation ; elle s'arrête
+pendant l'envoi et reprend en cas d'échec tant que les fichiers restent choisis.
+Le style général a été harmonisé dans l'unique feuille `style.css` : fond ivoire,
+cartes blanches, texte sombre et actions vertes ; l'aperçu mosaïque conserve son
+espace anthracite.
 
 ## Ce qui me bloque
 
-Après modification de la largeur et de la hauteur puis export en fond
-transparent, le PNG est resté en 1200 × 700. Il reste à préciser si j'avais
-cliqué sur « Générer l'aperçu » avant l'export.
+Aucun blocage particulier. Pour que l'export reflète une nouvelle largeur ou
+hauteur, il faut cliquer sur « Générer l'aperçu » avant d'exporter ; sinon,
+l'export conserve les dimensions de l'aperçu déjà affiché.
 
 ## Ma prochaine étape
 
-Préciser si l'aperçu avait été généré après le changement des dimensions, puis
-refaire l'essai correspondant. Continuer ensuite la recette de la mission 8,
-un essai à la fois.
+Vérifier dans le navigateur l'affichage des images portrait et paysage, puis
+refaire l'export avec une marge supérieure à 0 px et vérifier les dimensions
+du fichier. Poursuivre ensuite la recette de la mission 8.

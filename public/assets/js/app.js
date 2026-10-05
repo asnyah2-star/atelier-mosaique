@@ -45,7 +45,8 @@ $(document).ready(function () {
         var formulaire = document.createElement('form');
 
         image.src = 'image.php?id=' + encodeURIComponent(resultat.image_id)
-            + '&project_id=' + encodeURIComponent(projectId);
+            + '&project_id=' + encodeURIComponent(projectId)
+            + '&thumb=1&max=1200';
         image.alt = resultat.name;
         image.loading = 'lazy';
         legende.textContent = resultat.name;
@@ -112,6 +113,16 @@ $(document).ready(function () {
             });
     });   
 
+    var formulaireEnvoiImages = document.getElementById('form-envoi-images');
+    var champFichiersImages = formulaireEnvoiImages?.querySelector('input[type="file"]');
+    var boutonEnvoiImages = document.getElementById('bouton-envoi-images');
+
+    if (champFichiersImages && boutonEnvoiImages) {
+        champFichiersImages.addEventListener('change', function () {
+            boutonEnvoiImages.classList.toggle('button-attention', champFichiersImages.files.length > 0);
+        });
+    }
+
     $('#form-envoi-images').on('submit', function (evenement) {
         evenement.preventDefault();
         if (envoiImagesEnCours) {
@@ -127,6 +138,7 @@ $(document).ready(function () {
 
         envoiImagesEnCours = true;
         bouton.disabled = true;
+        bouton.classList.remove('button-attention');
         bouton.textContent = 'Envoi en cours…';
         formulaire.setAttribute('aria-busy', 'true');
         message.textContent = 'Les images sont en cours de vérification et d’envoi…';
@@ -166,14 +178,27 @@ $(document).ready(function () {
                 envoiImagesEnCours = false;
                 bouton.disabled = false;
                 bouton.textContent = 'Envoyer les images';
+                bouton.classList.toggle('button-attention', Boolean(champFichiersImages?.files.length));
                 formulaire.removeAttribute('aria-busy');
             });
     });
 
 
 
-    // Moteur Canvas repris du prototype, avec les images validées du projet.
-    if (document.querySelector('.mosaic-tool')) {
+	// Moteur Canvas repris du prototype, avec les images validées du projet.
+	if (document.querySelector('.mosaic-tool')) {
+	const mosaicForm = document.querySelector('.mosaic-panel');
+	const generateButton = mosaicForm?.querySelector('button[type="submit"]');
+	if (mosaicForm && generateButton) {
+	  const initialSettings = new URLSearchParams(new FormData(mosaicForm)).toString();
+	  const signalChangedSettings = () => {
+	    const currentSettings = new URLSearchParams(new FormData(mosaicForm)).toString();
+	    generateButton.classList.toggle('button-attention', currentSettings !== initialSettings);
+	  };
+	  mosaicForm.addEventListener('input', signalChangedSettings);
+	  mosaicForm.addEventListener('change', signalChangedSettings);
+	}
+
     // ===== Data injectée par PHP  -> =====
 	const DATA = window.donneesMosaiqueProjet || [];
   
