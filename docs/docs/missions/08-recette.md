@@ -13,13 +13,13 @@ Confie-moi ton atelier et observe son utilisation. Une **recette** est une liste
 3. Nous relirons ensemble les protections ajoutées depuis les missions 4 à 7. Corrige un problème à la fois et refais l'essai qui l'a révélé.
 4. Dans « Ce que j'ai fait » de ton [journal](../journal.md), raconte un problème rencontré, comment le reproduire et ce qui l'a résolu. Si tu n'as pas encore la solution, utilise « Ce qui me bloque ». Ajoute les limites connues au [guide de transmission](../transmission.md).
 
-| Essai local | Résultat attendu |
-| --- | --- |
+| Essai local | Résultat attendu | Résultat observé |
+| --- | --- | --- |
 | Crée « Bruxelles Babel 26 » et « Bruxelles Babel 27 » ; envoie des images différentes | Chaque galerie ne contient que ses images. |
 | Renomme « Bruxelles Babel 26 » en « Bruxelles Babel 26 — édition d'été », puis rétablis son nom initial | Accents et apostrophe restent corrects ; les images restent accessibles. |
 | Demande le retrait d'une image, annule, puis confirme | Annuler ne change rien ; confirmer retire seulement l'image choisie. |
 | Change les réglages, enregistre, ferme puis rouvre | Le projet retrouve toutes les valeurs, y compris une case décochée. |
-| Exporte un PNG coloré, puis transparent, avec une marge | Les fichiers s'ouvrent et leurs dimensions incluent la marge. |
+| Exporte un PNG coloré, puis transparent, avec une marge | Les fichiers s'ouvrent et leurs dimensions incluent la marge. | Refait le 5 octobre 2026 : export coloré avec marge de 0 px réussi. Après modification de largeur et hauteur, le PNG transparent s'est exporté mais est resté en 1200 × 700. À préciser : l'aperçu avait-il été généré après les changements ? La marge supérieure à 0 px reste à vérifier. |
 | Envoie un faux fichier image, un fichier trop gros ; ouvre un identifiant absent | Un message compréhensible indique quoi corriger ; aucun ajout partiel silencieux. |
 | Ouvre un projet vide, puis un projet avec une seule image | Les deux situations restent compréhensibles et utilisables. |
 | Garde la page du projet ouverte. Dans WampServer, choisis « Arrêter les services », puis tente un renommage AJAX. Redémarre les services et réessaie. | Un message accessible explique l'échec et le bouton redevient utilisable, sans faux succès ni réponse technique brute. Après redémarrage, le renommage fonctionne. |
