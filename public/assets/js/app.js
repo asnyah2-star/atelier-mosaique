@@ -118,9 +118,13 @@ $(document).ready(function () {
     var boutonEnvoiImages = document.getElementById('bouton-envoi-images');
 
     if (champFichiersImages && boutonEnvoiImages) {
-        champFichiersImages.addEventListener('change', function () {
-            boutonEnvoiImages.classList.toggle('button-attention', champFichiersImages.files.length > 0);
-        });
+        var actualiserBoutonEnvoiImages = function () {
+            var fichiersSelectionnes = champFichiersImages.files.length > 0;
+            boutonEnvoiImages.disabled = !fichiersSelectionnes || envoiImagesEnCours;
+            boutonEnvoiImages.classList.toggle('button-attention', fichiersSelectionnes);
+        };
+        champFichiersImages.addEventListener('change', actualiserBoutonEnvoiImages);
+        actualiserBoutonEnvoiImages();
     }
 
     $('#form-envoi-images').on('submit', function (evenement) {
@@ -176,7 +180,7 @@ $(document).ready(function () {
             })
             .always(function () {
                 envoiImagesEnCours = false;
-                bouton.disabled = false;
+                bouton.disabled = !champFichiersImages || champFichiersImages.files.length === 0;
                 bouton.textContent = 'Envoyer les images';
                 bouton.classList.toggle('button-attention', Boolean(champFichiersImages?.files.length));
                 formulaire.removeAttribute('aria-busy');

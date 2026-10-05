@@ -35,6 +35,20 @@ pendant l'envoi et reprend en cas d'échec tant que les fichiers restent choisis
 Le style général a été harmonisé dans l'unique feuille `style.css` : fond ivoire,
 cartes blanches, texte sombre et actions vertes ; l'aperçu mosaïque conserve son
 espace anthracite.
+Un renommage AJAX a fonctionné avec WampServer en marche. Le test de réponse
+à une panne a ensuite été commencé page déjà chargée : avec WampServer arrêté,
+le message « Le renommage a échoué. Réessaie. » apparaît sans réponse technique
+brute et le bouton redevient cliquable. Le renommage ne peut pas aboutir tant
+que les services restent arrêtés ; après redémarrage, le renommage a réussi.
+Pendant l'essai du double-clic d'envoi, une image a été acceptée une fois et le
+bilan indiquait 1 acceptée, 0 refusée. Le navigateur a brièvement affiché
+« Veuillez sélectionner au moins un fichier » après l'effacement du champ
+obligatoire. Le bouton d'envoi est maintenant désactivé quand aucun fichier
+n'est sélectionné. Le double-clic a été refait : une seule image est acceptée
+et le message du navigateur ne réapparaît plus.
+Le contrôle d'affichage HTML a réussi : le nom `<b>Essai</b>` apparaît tel
+quel, sans balise interprétée. Une relecture du code confirme l'emploi de
+requêtes préparées pour les opérations SQL avec des valeurs.
 
 ## Ce qui me bloque
 

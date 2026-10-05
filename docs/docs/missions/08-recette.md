@@ -20,11 +20,12 @@ Confie-moi ton atelier et observe son utilisation. Une **recette** est une liste
 | Demande le retrait d'une image, annule, puis confirme | Annuler ne change rien ; confirmer retire seulement l'image choisie. | Le retrait fonctionne selon Hasnia (5 octobre 2026). La confirmation s'affiche dans la vignette concernée ; après le premier clic, le focus revient sur cette vignette et « Confirmer le retrait » remplace « Retirer cette image ». Placement à vérifier dans le navigateur. |
 | Change les réglages, enregistre, ferme puis rouvre | Le projet retrouve toutes les valeurs, y compris une case décochée. |
 | Exporte un PNG coloré, puis transparent, avec une marge | Les fichiers s'ouvrent et leurs dimensions incluent la marge. | Refait le 5 octobre 2026 : export coloré avec marge de 0 px réussi. Pour le fond transparent, l'export a d'abord gardé 1200 × 700 car l'aperçu n'avait pas été régénéré après le changement des dimensions. Après avoir cliqué sur « Générer l'aperçu », les nouvelles dimensions ont été prises en compte. Marge supérieure à 0 px encore à vérifier. |
+| Renomme temporairement un projet en `<b>Essai</b>` et vérifie son affichage ; relis l'usage des requêtes SQL | Les balises apparaissent comme du texte, et les valeurs SQL passent par des paramètres préparés. | Réussi le 5 octobre 2026 : le nom s'affiche littéralement comme `<b>Essai</b>`, sans texte en gras. Relecture du code : les opérations SQL avec valeurs utilisent PDO `prepare()` et des paramètres nommés. Remettre le nom d'origine après l'essai. |
 | Envoie un faux fichier image, un fichier trop gros ; ouvre un identifiant absent | Un message compréhensible indique quoi corriger ; aucun ajout partiel silencieux. |
 | Ouvre un projet vide, puis un projet avec une seule image | Les deux situations restent compréhensibles et utilisables. |
-| Garde la page du projet ouverte. Dans WampServer, choisis « Arrêter les services », puis tente un renommage AJAX. Redémarre les services et réessaie. | Un message accessible explique l'échec et le bouton redevient utilisable, sans faux succès ni réponse technique brute. Après redémarrage, le renommage fonctionne. |
+| Garde la page du projet ouverte. Dans WampServer, choisis « Arrêter les services », puis tente un renommage AJAX. Redémarre les services et réessaie. | Un message accessible explique l'échec et le bouton redevient utilisable, sans faux succès ni réponse technique brute. Après redémarrage, le renommage fonctionne. | Réussi le 5 octobre 2026 : services arrêtés après chargement de la page, message « Le renommage a échoué. Réessaie. » sans erreur technique brute, bouton réactivé ; après redémarrage, le renommage a réussi. |
 | Envoie un nom invalide ou un jeton CSRF incorrect par AJAX | PHP refuse ; les données restent intactes et le message indique quoi faire. |
-| Clique deux fois rapidement pendant un envoi d'image | Une seule requête part ; l'état d'attente et le bilan restent compréhensibles. |
+| Clique deux fois rapidement pendant un envoi d'image | Une seule requête part ; l'état d'attente et le bilan restent compréhensibles. | Réussi après correction le 5 octobre 2026 : une seule image acceptée ; le bouton reste désactivé après envoi jusqu'à la prochaine sélection et le message de validation du navigateur ne revient plus. |
 
 Pose ensuite la souris : parcours liens, formulaires, confirmation, génération et export avec Tab, Maj+Tab, Entrée et Espace selon le contrôle. Le focus doit rester visible, logique et accessible après un message d'erreur ou un retrait. Essaie une largeur de 320 pixels CSS, le zoom à 200 %, puis 400 %, et la préférence de réduction des animations. Les boutons et messages doivent rester accessibles ; l'aperçu peut s'adapter à l'espace. Vérifie aussi les labels, les alternatives des images et les contrastes. Ces essais ne constituent pas une certification d'accessibilité.
 
@@ -62,8 +63,8 @@ Lors de notre revue, dans ta copie locale, remplace l'identifiant d'une image de
 ## Pour valider la mission
 
 - [ ] Les essais fonctionnels et clavier ont un résultat écrit, y compris ceux restant à corriger.
-- [ ] Les échecs AJAX et le double envoi ont été essayés ; les messages restent accessibles et les boutons ne restent pas bloqués.
-- [ ] Un texte ressemblant à du HTML s'affiche comme du texte ; les requêtes utilisent des paramètres préparés.
+- [x] Les échecs AJAX et le double envoi ont été essayés ; les messages restent accessibles et les boutons ne restent pas bloqués.
+- [x] Un texte ressemblant à du HTML s'affiche comme du texte ; les requêtes utilisent des paramètres préparés.
 - [ ] Nous avons vérifié ensemble qu'un jeton absent ou faux entraîne le refus de la modification, sans changer la base ni les fichiers.
 - [ ] Une image d'un autre projet et un chemin invalide sont refusés côté serveur, y compris pour afficher une miniature.
 - [ ] Tu sais reproduire et expliquer un problème résolu ou encore ouvert, sans masquer une limite du prototype.
