@@ -598,12 +598,12 @@ function scalePreview(){
 
 	  window.apiEnregistrerReglagesMosaique(data)
 	    .done(function (response) {
-	      message.textContent = response.message || 'Réglages enregistrés.';
 	      // Le moteur lit ses dimensions au démarrage. Revenir à l’URL canonique
 	      // recharge les valeurs confirmées par PHP, sans anciens paramètres GET.
+	      message.textContent = (response.message || 'Réglages enregistrés.') + ' Rechargement de l’aperçu…';
 	      window.setTimeout(function () {
 	        window.location.assign('projet.php?id=' + encodeURIComponent(data.project_id));
-	      }, 500);
+	      }, 2000);
 	    })
 	    .fail(function (xhr) {
 	      const response = xhr.responseJSON;

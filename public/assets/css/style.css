@@ -186,6 +186,12 @@ input[type="text"] {
     font-size: .85rem;
 }
 .mosaic-field legend { margin-bottom: .35rem; }
+.mosaic-save-help {
+    flex-basis: 100%;
+    margin: 0;
+    color: var(--mosaic-muted);
+    font-size: .9rem;
+}
 .mosaic-field input[type="number"],
 .mosaic-field input[type="text"] {
     width: 9rem;

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Mission 8 — Bilan de recette</title>
+</head>
+<body>
+  <p class="eyebrow">Atelier mosaïque · 6 octobre 2026</p>
+  <h1>Mission 8 — Bilan de recette</h1>
+  <p class="lead">La mission 8 est validée. Les essais réalisés, les refus de sécurité et les points à confirmer sont consignés dans la recette et le journal.</p>
+
+  <h2>Vérifications réussies</h2>
+  <ul>
+    <li>Les galeries des projets de test restent séparées ; le renommage conserve les accents et l'apostrophe.</li>
+    <li>Le retrait d'image demande confirmation. Le focus revient sur l'image concernée.</li>
+    <li>L'export PNG coloré fonctionne. Pour appliquer de nouvelles dimensions, cliquer sur « Générer l'aperçu » avant l'export.</li>
+    <li>Le texte ressemblant à du HTML s'affiche comme du texte ; les requêtes SQL utilisent des paramètres préparés.</li>
+    <li>Un faux jeton CSRF est refusé (HTTP 403) sans modifier le projet.</li>
+    <li>Une miniature d'un autre projet et un chemin invalide sont refusés ; aucun fichier n'est révélé.</li>
+    <li>Les erreurs AJAX et le double envoi ont été essayés. Le parcours clavier, le focus, les zooms et la réduction des animations ont été confirmés comme réussis par Hasnia.</li>
+  </ul>
+
+  <h2>Points à confirmer</h2>
+  <p>Le 6 octobre, les réglages choisis sont restés enregistrés après utilisation du bouton « Enregistrer les réglages » et actualisation. Une mosaïque à une image et un export avec marge supérieure à 0 px fonctionnent également.</p>
+  <p>Restent à vérifier : refus d'un fichier au mauvais format, identifiant absent, affichage d'une galerie vide et les autres touches clavier/zoom. Le fichier supérieur à 5 Mio a bien été refusé.</p>
+  <p>Après ce test, une aide a été ajoutée pour distinguer les deux étapes : générer l'aperçu, puis enregistrer les réglages. Le message de réussite reste maintenant visible plus longtemps avant le rechargement ; ce changement reste à retester dans le navigateur.</p>
+
+  <h2>Problème expliqué</h2>
+  <p>Après avoir modifié la largeur ou la hauteur, exporter sans régénérer l'aperçu conservait les anciennes dimensions (1200 × 700). La correction est de cliquer sur « Générer l'aperçu », puis d'exporter.</p>
+
+  <h2>Suite</h2>
+  <p>La mission 9 consiste à compléter le guide de transmission, préparer des données de démonstration non sensibles et vérifier la reprise de l'application sur une installation vierge.</p>
+  <p class="footer">Détails des essais : docs/docs/missions/08-recette.md · Historique : docs/docs/journal.md</p>
+</body>
+</html>

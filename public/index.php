@@ -86,10 +86,11 @@ $projets = $requeteProjets->fetchAll();
         <h2>Quelques projets</h2>
         <ul>
             <?php foreach ($projets as $projet): ?>
-                <li>
-                    <a href="projet.php?id=<?= (int) $projet['id'] ?>">
+                <li data-id_projet="<?= (int) $projet['id'] ?>">
+                    <a href="projet.php?id=<?= (int) $projet['id'] ?>" >
                         <?= htmlspecialchars($projet['name'], ENT_QUOTES, 'UTF-8') ?>
                     </a>
+                    
                 </li>
             <?php endforeach; ?>
         </ul>

@@ -49,6 +49,27 @@ et le message du navigateur ne réapparaît plus.
 Le contrôle d'affichage HTML a réussi : le nom `<b>Essai</b>` apparaît tel
 quel, sans balise interprétée. Une relecture du code confirme l'emploi de
 requêtes préparées pour les opérations SQL avec des valeurs.
+Le test CSRF a également réussi : une requête AJAX de renommage avec un faux
+jeton a reçu une réponse HTTP 403 (« Jeton de sécurité invalide. »). La page du
+projet est restée accessible après le test et le nom du projet n'a pas changé.
+Le 6 octobre, une miniature du projet 5 a été demandée avec l'identifiant du
+projet 4. Le serveur a répondu « Image introuvable dans ce projet. » ; aucune
+donnée n'a été modifiée. Le test suivant a remplacé l'identifiant de miniature
+par `../../src/connexion.php` ; le serveur a répondu « Image introuvable. » et
+n'a révélé aucun fichier.
+J'ai aussi pu expliquer le souci des dimensions PNG : après modification de la
+largeur ou de la hauteur, il faut cliquer sur « Générer l'aperçu » avant
+l'export pour appliquer les nouveaux réglages.
+Le 6 octobre, j'ai confirmé que la navigation avec Tab fonctionne. Une mosaïque
+avec une seule image s'affiche correctement. Le fichier `smoka.png` a été refusé
+avec le message « Le fichier dépasse la limite de 5 Mio. ». J'ai aussi confirmé
+qu'un export avec une marge supérieure à 0 px fonctionne. J'ai vérifié que les
+réglages choisis restent enregistrés après avoir utilisé « Enregistrer les
+réglages » puis actualisé la page. Restent à vérifier : fichier au mauvais
+format, identifiant absent, projet vide et autres touches clavier/zoom.
+Le message de réussite de l'enregistrement était trop bref pour être remarqué.
+L'interface indique maintenant l'ordre conseillé — générer l'aperçu, puis
+enregistrer — et laisse le message visible plus longtemps avant le rechargement.
 
 ## Ce qui me bloque
 
@@ -58,6 +79,5 @@ l'export conserve les dimensions de l'aperçu déjà affiché.
 
 ## Ma prochaine étape
 
-Vérifier dans le navigateur l'affichage des images portrait et paysage, puis
-refaire l'export avec une marge supérieure à 0 px et vérifier les dimensions
-du fichier. Poursuivre ensuite la recette de la mission 8.
+Commencer la mission 9 : compléter le guide de transmission avec les informations
+locales vérifiées, puis préparer un jeu de démonstration non sensible.

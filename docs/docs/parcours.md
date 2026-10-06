@@ -23,7 +23,7 @@ Le fichier `api.js` regroupera ces échanges ; `app.js` pilotera l'interface.
 | ☐ | [5 — Range tes projets](missions/05-projets.md) | Des projets que tu peux ouvrir et renommer |
 | ☐ | [6 — Accueille tes premières images](missions/06-images.md) | Des galeries distinctes et un retrait confirmé |
 | ☐ | [7 — Branche la machine à mosaïques](missions/07-mosaiques.md) | Une mosaïque par projet, ses réglages et son PNG |
-| ☐ | [8 — Fais essayer ton atelier](missions/08-recette.md) | Un parcours testé et des problèmes décrits précisément |
+| ☑ | [8 — Fais essayer ton atelier](missions/08-recette.md) | Un parcours testé et des problèmes décrits précisément |
 | ☐ | [9 — Prépare la transmission](missions/09-transmission.md) | Ton application lancée sur un autre ordinateur |
 
 ## Une routine légère
