@@ -74,10 +74,24 @@ a {
 }
 .page-action-link:hover { background: var(--accent-hover); }
 .page-action-end {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1000;
     display: flex;
+    flex-direction: row;
     justify-content: flex-end;
-    margin-block: 1.5rem .25rem;
+    align-items: center;
+    gap: .65rem;
+    max-width: calc(100vw - 2rem);
+    margin: 0;
+    padding: .65rem;
+    border: 1px solid var(--border);
+    border-radius: .85rem;
+    background: var(--surface);
+    box-shadow: 0 .3rem 1.2rem rgb(32 37 34 / 18%);
 }
+main#haut-page { padding-bottom: 6rem; }
 h1 {
     line-height: 1.2;
 }
@@ -172,6 +186,15 @@ h1 {
 .project-list > li > a:hover { color: var(--accent); }
 .project-action-form { display: inline-flex; }
 .project-action-form button { margin: 0; }
+.projets-archives .project-list > .archived-project-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+}
+.projets-archives .archived-project-item > span { grid-column: 1 / -1; }
+.projets-archives .archived-project-item > .archive-delete-form {
+    grid-column: 1 / -1;
+}
 .projetReal button {
     padding: .45rem .7rem;
     font-size: .88rem;
@@ -182,6 +205,7 @@ h1 {
 }
 .danger-button { border-color: #8f2e32; background: #a33b3f; }
 .danger-button:hover { background: #842d31; }
+.bulk-image-action { margin: 0; }
 .project-notice {
     flex-basis: 100%;
     padding: .75rem 1rem;
@@ -343,6 +367,16 @@ input[type="text"] {
 }
 @media (max-width: 38rem) {
     #liste-galerie-images > li { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 38rem) {
+    .page-action-end {
+        right: .65rem;
+        bottom: .65rem;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: .5rem;
+    }
+    main#haut-page { padding-bottom: 10rem; }
 }
 @media (max-width: 55rem) {
     .projetReal { grid-template-columns: repeat(2, minmax(0, 1fr)); }

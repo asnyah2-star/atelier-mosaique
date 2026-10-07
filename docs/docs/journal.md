@@ -119,6 +119,13 @@ disposition reste à vérifier aux différentes largeurs d'écran.
 Le 7 octobre, les projets sont explicitement empilés en une seule colonne à
 l'intérieur de chaque liste ; une séparation légère les distingue. La taille
 de la police des boutons de l'accueil a été légèrement réduite.
+Un bouton « Supprimer toutes les images » a été ajouté à la galerie d'un projet
+non vide. Il demande confirmation et vise uniquement les images de ce projet ;
+la base et le stockage sont traités ensemble avec vérification des fichiers.
+Le bouton est placé tout en bas de la page du projet. Le parcours de suppression
+reste à essayer dans le navigateur. Les actions « Retour en haut » et
+« Supprimer toutes les images » flottent maintenant en bas à droite ; sur petit
+écran, elles s'empilent. Cette disposition reste à vérifier dans le navigateur.
 
 ## Ce qui me bloque
 

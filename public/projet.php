@@ -58,9 +58,13 @@ $mosaiqueTransparent = array_key_exists('w', $_GET)
 $erreur = '';
 $messageImage = '';
 $resultatsUpload = [];
-$messageSuppression = ($_GET['resultat'] ?? '') === 'image_retiree'
-    ? 'L’image a été retirée du projet.'
-    : '';
+$messageSuppression = match ($_GET['resultat'] ?? '') {
+    'image_retiree' => 'L’image a été retirée du projet.',
+    'images_supprimees' => 'Toutes les images ont été supprimées du projet.',
+    'nettoyage_incomplet' => 'Les images ont été retirées de la galerie, mais un fichier temporaire n’a pas pu être supprimé du stockage.',
+    'aucune_image' => 'Ce projet ne contient aucune image à supprimer.',
+    default => '',
+};
 $confirmationSuppression = null;
 $nom = $projet['name'];
 
@@ -464,7 +468,97 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'project_id' => $id,
             ]);
         }
-// le retrait avec une confirmation en deux temps
+    } elseif ($action === 'supprimer_toutes_images') {
+        $requeteImagesASupprimer = $pdo->prepare(
+            'SELECT id FROM images WHERE project_id = :project_id ORDER BY id'
+        );
+        $requeteImagesASupprimer->execute(['project_id' => $id]);
+        $idsImagesASupprimer = $requeteImagesASupprimer->fetchAll(PDO::FETCH_COLUMN);
+
+        if ($idsImagesASupprimer === []) {
+            header('Location: projet.php?id=' . $id . '&resultat=aucune_image');
+            exit;
+        }
+
+        $imagesVerifiees = [];
+        foreach ($idsImagesASupprimer as $imageIdASupprimer) {
+            $imageVerifiee = $trouverImageProjet((int) $imageIdASupprimer, $id);
+            if ($imageVerifiee === null) {
+                $erreur = 'Suppression annulée : une image ou son fichier ne peut pas être vérifié. Aucune image n’a été supprimée.';
+                break;
+            }
+            $imagesVerifiees[] = $imageVerifiee;
+        }
+
+        if ($erreur === '') {
+            $dossierProjet = realpath(dirname(__DIR__) . '/storage/projects/' . $id);
+            if ($dossierProjet === false) {
+                $erreur = 'Suppression annulée : le dossier des images ne peut pas être vérifié.';
+            } else {
+                $dossierQuarantaine = $dossierProjet . DIRECTORY_SEPARATOR . '.suppression-' . bin2hex(random_bytes(8));
+                if (!mkdir($dossierQuarantaine, 0700)) {
+                    $erreur = 'Le dossier temporaire de suppression n’a pas pu être créé. Aucune image n’a été supprimée.';
+                } else {
+                    $fichiersDeplaces = [];
+                    foreach ($imagesVerifiees as $imageVerifiee) {
+                        $cheminTemporaire = $dossierQuarantaine . DIRECTORY_SEPARATOR . basename($imageVerifiee['chemin']);
+                        if (!rename($imageVerifiee['chemin'], $cheminTemporaire)) {
+                            $erreur = 'La suppression a été annulée : un fichier n’a pas pu être déplacé. Aucune image n’a été supprimée.';
+                            break;
+                        }
+                        $fichiersDeplaces[] = [
+                            'original' => $imageVerifiee['chemin'],
+                            'temporaire' => $cheminTemporaire,
+                        ];
+                    }
+
+                    if ($erreur === '') {
+                        try {
+                            $pdo->beginTransaction();
+                            $suppressionImages = $pdo->prepare(
+                                'DELETE FROM images WHERE project_id = :project_id'
+                            );
+                            $suppressionImages->execute(['project_id' => $id]);
+                            if ($suppressionImages->rowCount() !== count($imagesVerifiees)) {
+                                throw new RuntimeException('Le nombre de lignes supprimées ne correspond pas aux images vérifiées.');
+                            }
+                            $pdo->commit();
+                        } catch (Throwable $exception) {
+                            if ($pdo->inTransaction()) {
+                                $pdo->rollBack();
+                            }
+                            $erreur = 'La suppression a échoué. Les images vont être restaurées.';
+                        }
+                    }
+
+                    if ($erreur !== '') {
+                        $restaurationReussie = true;
+                        foreach (array_reverse($fichiersDeplaces) as $fichierDeplace) {
+                            if (!rename($fichierDeplace['temporaire'], $fichierDeplace['original'])) {
+                                $restaurationReussie = false;
+                            }
+                        }
+                        @rmdir($dossierQuarantaine);
+                        if (!$restaurationReussie) {
+                            $erreur .= ' Un fichier n’a pas pu être restauré ; demande de l’aide avant de réessayer.';
+                        }
+                    } else {
+                        $nettoyageReussi = true;
+                        foreach ($fichiersDeplaces as $fichierDeplace) {
+                            if (!@unlink($fichierDeplace['temporaire'])) {
+                                $nettoyageReussi = false;
+                            }
+                        }
+                        if (!@rmdir($dossierQuarantaine)) {
+                            $nettoyageReussi = false;
+                        }
+                        header('Location: projet.php?id=' . $id . '&resultat=' . ($nettoyageReussi ? 'images_supprimees' : 'nettoyage_incomplet'));
+                        exit;
+                    }
+                }
+            }
+        }
+// Le retrait individuel garde sa confirmation en deux temps.
     } elseif ($action === 'demander_retrait' || $action === 'supprimer_image') {
         $imageIdRecu = $_POST['image_id'] ?? null;
 
@@ -773,7 +867,7 @@ $donneesMosaique = array_map(
                     <?php endforeach; ?>
             </ul>
 
-            <?php if ($erreur !== '' && in_array($_POST['action'] ?? '', ['demander_retrait', 'supprimer_image'], true)): ?>
+            <?php if ($erreur !== '' && in_array($_POST['action'] ?? '', ['demander_retrait', 'supprimer_image', 'supprimer_toutes_images'], true)): ?>
                 <p role="alert"><?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?></p>
             <?php endif; ?>
             <?php if ($messageSuppression !== ''): ?>
@@ -782,9 +876,22 @@ $donneesMosaique = array_map(
 
         </section>
 
-        <p class="page-action-end">
+        <div class="page-action-end">
             <a class="page-action-link" href="#haut-page">↑ Retour en haut</a>
-        </p>
+            <?php if ($images !== []): ?>
+                <form
+                    method="post"
+                    action="projet.php?id=<?= (int) $id ?>"
+                    class="bulk-image-action"
+                    onsubmit="return confirm('Supprimer définitivement les <?= count($images) ?> images de ce projet ? Cette action est irréversible.')"
+                >
+                    <input type="hidden" name="action" value="supprimer_toutes_images">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+                    <input type="hidden" name="project_id" value="<?= (int) $id ?>">
+                    <button type="submit" class="danger-button">Supprimer toutes les images</button>
+                </form>
+            <?php endif; ?>
+        </div>
     </main>
 </body>
 </html>

@@ -227,7 +227,7 @@ $projetsArchives = $requeteProjetsArchives->fetchAll();
             <?php if ($projetsArchives !== []): ?>
                 <ul class="project-list">
                     <?php foreach ($projetsArchives as $projetArchive): ?>
-                        <li data-id_projet="<?= (int) $projetArchive['id'] ?>">
+                        <li class="archived-project-item" data-id_projet="<?= (int) $projetArchive['id'] ?>">
                             <span><?= htmlspecialchars($projetArchive['name'], ENT_QUOTES, 'UTF-8') ?></span>
                             <form method="post" class="project-action-form">
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
@@ -235,7 +235,7 @@ $projetsArchives = $requeteProjetsArchives->fetchAll();
                                 <input type="hidden" name="project_id" value="<?= (int) $projetArchive['id'] ?>">
                                 <button type="submit">Restaurer</button>
                             </form>
-                            <form method="post" class="project-action-form" onsubmit="return confirm('Supprimer définitivement ce projet et ses images ? Cette action est irréversible.');">
+                            <form method="post" class="project-action-form archive-delete-form" onsubmit="return confirm('Supprimer définitivement ce projet et ses images ? Cette action est irréversible.');">
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
                                 <input type="hidden" name="action" value="supprimer_projet">
                                 <input type="hidden" name="project_id" value="<?= (int) $projetArchive['id'] ?>">
