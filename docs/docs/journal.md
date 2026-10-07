@@ -63,9 +63,13 @@ l'export pour appliquer les nouveaux réglages.
 Le 6 octobre, j'ai confirmé que la navigation avec Tab fonctionne. Une mosaïque
 avec une seule image s'affiche correctement. Le fichier `smoka.png` a été refusé
 avec le message « Le fichier dépasse la limite de 5 Mio. ». J'ai aussi confirmé
-qu'un export avec une marge supérieure à 0 px fonctionne. J'ai vérifié que les
-réglages choisis restent enregistrés après avoir utilisé « Enregistrer les
-réglages » puis actualisé la page. Restent à vérifier : fichier au mauvais
+qu'un export avec une marge supérieure à 0 px fonctionne. Lors du retour dans
+le projet, les anciens réglages sont revenus et aucun message de confirmation
+n'était visible. La revue du code a révélé que le bouton de sauvegarde cherchait
+un champ `project_id` absent du formulaire. Le formulaire contient `id` ; le
+JavaScript utilisait donc un identifiant inexistant et n'envoyait pas la requête.
+Le code a été corrigé pour lire cet identifiant ; le test de persistance doit
+être refait dans le navigateur. Restent aussi à vérifier : fichier au mauvais
 format, identifiant absent, projet vide et autres touches clavier/zoom.
 Le message de réussite de l'enregistrement était trop bref pour être remarqué.
 L'interface indique maintenant l'ordre conseillé — générer l'aperçu, puis

@@ -578,8 +578,9 @@ function scalePreview(){
 	  if (!form.reportValidity()) return;
 
 	  const mode = form.querySelector('input[name="mode"]:checked');
+	  const projectId = form.querySelector('input[name="id"]').value;
 	  const data = {
-	    project_id: form.elements.project_id.value,
+	    project_id: projectId,
 	    csrf_token: document.getElementById('mosaicCsrfToken').value,
 	    w: form.elements.w.value,
 	    h: form.elements.h.value,
