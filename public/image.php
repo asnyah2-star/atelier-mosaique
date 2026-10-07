@@ -22,9 +22,12 @@ $imageId = (int) $imageIdRecu;
 $projetId = (int) $projetIdRecu;
 
 $requete = $pdo->prepare(
-    'SELECT storage_name, mime_type
+    'SELECT images.storage_name, images.mime_type
      FROM images
-     WHERE id = :image_id AND project_id = :project_id'
+     INNER JOIN projects ON projects.id = images.project_id
+     WHERE images.id = :image_id
+       AND images.project_id = :project_id
+       AND projects.archived_at IS NULL'
 );
 $requete->execute([
     'image_id' => $imageId,

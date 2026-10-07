@@ -21,7 +21,8 @@ CREATE TABLE projects (
     mosaic_bg CHAR(7) NOT NULL DEFAULT '#12121a',
     mosaic_bg_transparent TINYINT UNSIGNED NOT NULL DEFAULT 0,
     mosaic_margin SMALLINT UNSIGNED NOT NULL DEFAULT 0,
-    mosaic_seed BIGINT UNSIGNED DEFAULT NULL
+    mosaic_seed BIGINT UNSIGNED DEFAULT NULL,
+    archived_at TIMESTAMP NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Une ligne par image ; le fichier lui-même reste dans storage/projects/.

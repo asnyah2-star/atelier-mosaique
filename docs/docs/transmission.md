@@ -73,6 +73,10 @@ Si nous changeons sa version, nous adapterons son nom dans la page et l'exceptio
 
 Git ne copie pas automatiquement la base en cours d'utilisation ni les photos
 ignorées. Ne copie jamais les fichiers internes de MySQL/MariaDB en fonctionnement.
+Pour une base déjà créée avant l'ajout de l'archivage, exécute une seule fois
+`database/migrations/2026-10-07-add-project-archive.sql` dans la base de
+l'application ; une nouvelle base reçoit directement `archived_at` depuis
+`database/schema.sql`.
 `.gitignore` n'efface pas un secret déjà suivi : si tu en repères un, interromps
 le partage et préviens-moi pour que nous traitions le problème.
 

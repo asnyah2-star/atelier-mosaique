@@ -23,7 +23,7 @@ $requete = $pdo->prepare(
     mosaic_gap, mosaic_radius, mosaic_bg, mosaic_bg_transparent,
     mosaic_margin, mosaic_seed
     FROM projects
-    WHERE id = :id'
+    WHERE id = :id AND archived_at IS NULL'
 );
 $requete->execute(['id' => $id]);
 $projet = $requete->fetch();

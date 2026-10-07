@@ -75,6 +75,26 @@ Le message de réussite de l'enregistrement était trop bref pour être remarqu�
 L'interface indique maintenant l'ordre conseillé — générer l'aperçu, puis
 enregistrer — et laisse le message visible plus longtemps avant le rechargement.
 
+Le 7 octobre, nous avons commencé l'archivage récupérable des projets : le bouton
+« Archiver » masque un projet de la liste active sans supprimer sa base ni ses
+images ; la liste « Projets archivés » propose de le restaurer. Une colonne
+`archived_at` et une migration SQL sont nécessaires. La mise à jour de la base
+locale a été appliquée ; le parcours archiver/restaurer reste à vérifier dans
+le navigateur. Le lien entre chaque `<li>` et son projet (`data-id_projet`) est
+conservé pour le ciblage CSS.
+Le 7 octobre, Hasnia a confirmé que la demande de confirmation de l'archivage
+s'affiche. La liste active et la liste d'archives utilisent maintenant trois
+colonnes sur grand écran et une zone de défilement interne à hauteur fixe. Un
+bouton de suppression définitive est proposé uniquement pour un projet archivé ;
+il demande confirmation, supprime les lignes en base puis les fichiers d'images
+connus. Hasnia a confirmé le message de suppression définitive le 7 octobre.
+La page d'accueil est maintenant organisée en trois cartes de même hauteur,
+centrées et alignées ; les listes défilent à l'intérieur. La nouvelle
+disposition reste à vérifier aux différentes largeurs d'écran.
+Le 7 octobre, les projets sont explicitement empilés en une seule colonne à
+l'intérieur de chaque liste ; une séparation légère les distingue. La taille
+de la police des boutons de l'accueil a été légèrement réduite.
+
 ## Ce qui me bloque
 
 Aucun blocage particulier. Pour que l'export reflète une nouvelle largeur ou
