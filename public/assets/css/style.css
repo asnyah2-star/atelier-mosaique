@@ -107,6 +107,7 @@ h1 {
     margin: 2rem auto;
     font-size: .95rem;
 }
+.home-title { text-align: center; }
 .projetReal > .project-notice { grid-column: 1 / -1; margin: 0; }
 .projetReal > .formulaire { order: 1; }
 .projetReal > .etat-projets,

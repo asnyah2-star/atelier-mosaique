@@ -203,8 +203,15 @@ $(document).ready(function () {
 	  mosaicForm.addEventListener('change', signalChangedSettings);
 	}
 
-    // ===== Data injectée par PHP  -> =====
+	// ===== Data injectée par PHP  -> =====
 	const DATA = window.donneesMosaiqueProjet || [];
+	const MESSAGE_SANS_IMAGES = 'Aucune image à disposer pour le moment.';
+	function afficherMessageSiSansImages(){
+	  if (DATA.length > 0) return false;
+	  const message = document.getElementById('mosaic-message');
+	  if (message) message.textContent = MESSAGE_SANS_IMAGES;
+	  return true;
+	}
   
 	const W = Number(document.getElementById("w").value);
 	const H = Number(document.getElementById("h").value);
@@ -425,6 +432,7 @@ function scalePreview(){
   
 	// ===== Seed regen =====
 	function regenSeed(){
+	  if (afficherMessageSiSansImages()) return;
 	  const u = new URL(location.href);
 	  u.searchParams.set('seed', String(Date.now()));
 	  location.href = u.toString();
@@ -480,6 +488,7 @@ function scalePreview(){
 	}
   
 	async function exportMosaicToPng(){
+	  if (afficherMessageSiSansImages()) return;
 	  const el = document.getElementById('gallery');
 	  const bgTxt = document.getElementById('bg');
 	  const chk = document.getElementById('bg_transparent');
@@ -575,6 +584,7 @@ function scalePreview(){
 	  const button = this;
 	  const message = document.getElementById('mosaic-message');
 	  if (!form || !message) return;
+	  if (afficherMessageSiSansImages()) return;
 	  if (!form.reportValidity()) return;
 
 	  const mode = form.querySelector('input[name="mode"]:checked');

@@ -184,7 +184,7 @@ $projetsArchives = $requeteProjetsArchives->fetchAll();
 </head>
 <body>
     <main>
-        <h1>Mon atelier de mosaïques</h1>
+        <h1 class="home-title">Mon atelier de mosaïques</h1>
         <!-- <p><strong>Hasnia</strong>, voici le point de départ de ton application.</p>
         <p>Suis la fiche de mission que je t’ai transmise.</p>
         <p>PHP fonctionne : version <?= htmlspecialchars(PHP_VERSION, ENT_QUOTES, 'UTF-8') ?>.</p> -->

@@ -620,7 +620,9 @@ $donneesMosaique = array_map(
                     <input id="bg_color" type="color" value="<?= htmlspecialchars($mosaiqueBg, ENT_QUOTES, 'UTF-8') ?>" aria-label="Choisir la couleur du fond">
                     <label><input id="bg_transparent" type="checkbox" name="bg_transparent" value="1"<?= $mosaiqueTransparent ? ' checked' : '' ?>> Fond transparent</label>
                 </div>
-                <p class="mosaic-save-help">1. Modifie les réglages puis clique sur « Générer l’aperçu » pour voir le résultat. 2. Clique sur « Enregistrer les réglages » pour conserver ces réglages dans ce projet.</p>
+                <?php if ($images !== []): ?>
+                    <p class="mosaic-save-help">1. Modifie les réglages puis clique sur « Générer l’aperçu » pour voir le résultat. 2. Clique sur « Enregistrer les réglages » pour conserver ces réglages dans ce projet.</p>
+                <?php endif; ?>
                 <button class="mosaic-button primary" type="submit">Générer l’aperçu</button>
                 <button class="mosaic-button" type="button" id="saveMosaicSettings">Enregistrer les réglages</button>
                 <button class="mosaic-button" type="button" id="regenMosaic">Régénérer</button>

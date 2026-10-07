@@ -68,12 +68,37 @@ le projet, les anciens réglages sont revenus et aucun message de confirmation
 n'était visible. La revue du code a révélé que le bouton de sauvegarde cherchait
 un champ `project_id` absent du formulaire. Le formulaire contient `id` ; le
 JavaScript utilisait donc un identifiant inexistant et n'envoyait pas la requête.
-Le code a été corrigé pour lire cet identifiant ; le test de persistance doit
-être refait dans le navigateur. Restent aussi à vérifier : fichier au mauvais
-format, identifiant absent, projet vide et autres touches clavier/zoom.
+Le code a été corrigé pour lire cet identifiant. Le 7 octobre, Hasnia a refait
+le test : le message « Réglages enregistrés. » apparaît et les valeurs choisies
+restent présentes après rechargement et réouverture du projet. Le refus d'un
+fichier au mauvais format et celui d'un identifiant d'image absent ont aussi
+été confirmés le 7 octobre. Le parcours clavier avait déjà été essayé selon
+Hasnia ; les détails sont précisés ci-dessous.
 Le message de réussite de l'enregistrement était trop bref pour être remarqué.
 L'interface indique maintenant l'ordre conseillé — générer l'aperçu, puis
 enregistrer — et laisse le message visible plus longtemps avant le rechargement.
+
+Le 7 octobre, j'ai envoyé `Frescito.gif` pour vérifier le refus d'un format
+non accepté. Le serveur a affiché « Format refusé : seuls JPEG et PNG sont
+acceptés. » ; le test est réussi. Le même jour, une demande de miniature avec
+un identifiant d'image inexistant a été refusée avec « Image introuvable dans
+ce projet. ». Aucun changement n'a été fait aux images ; ce test est réussi.
+
+Hasnia précise le 7 octobre qu'elle avait déjà réalisé le test clavier Maj+Tab
+et coché toutes les cases de validation de la mission 8. Les résultats détaillés
+de chaque touche et de chaque condition d'affichage ne sont pas tous recopiés
+dans le tableau ; ne pas recommencer ces essais sans nécessité.
+
+Le 7 octobre, dans un projet sans image, le clic sur « Générer l’aperçu » a
+affiché « Aucune image à disposer pour le moment. » et l’export PNG était
+désactivé. Le texte d’aide qui conseillait de générer l’aperçu puis d’enregistrer
+les réglages restait visible et prêtait à confusion. Il est maintenant rendu
+uniquement lorsque le projet contient des images. Lors du clic sur « Enregistrer
+les réglages », le serveur a ensuite affiché une erreur de seed. Les actions de
+mosaïque affichent maintenant le message « Aucune image à disposer pour le
+moment. » et s’arrêtent sans requête quand le projet n’a aucune image. Hasnia a
+confirmé que le message reste correct après le clic sur « Enregistrer les
+réglages » ; le cas vide est vérifié.
 
 Le 7 octobre, nous avons commencé l'archivage récupérable des projets : le bouton
 « Archiver » masque un projet de la liste active sans supprimer sa base ni ses
