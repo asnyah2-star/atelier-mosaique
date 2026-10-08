@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const appUrl = process.env.ATELIER_MOSAIQUE_URL || 'http://localhost/atelier-mosaique/public/';
 
 if (require('electron-squirrel-startup')) app.quit();
 
@@ -12,7 +13,7 @@ function createWindow() {
     },
   });
 
-  window.loadURL('http://localhost/atelier-mosaique/public/');
+  window.loadURL(appUrl);
 }
 
 app.whenReady().then(() => {
