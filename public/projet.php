@@ -874,10 +874,6 @@ $donneesMosaique = array_map(
                 <p role="status"><?= htmlspecialchars($messageSuppression, ENT_QUOTES, 'UTF-8') ?></p>
             <?php endif; ?>
 
-        </section>
-
-        <div class="page-action-end">
-            <a class="page-action-link" href="#haut-page">↑ Retour en haut</a>
             <?php if ($images !== []): ?>
                 <form
                     method="post"
@@ -891,6 +887,11 @@ $donneesMosaique = array_map(
                     <button type="submit" class="danger-button">Supprimer toutes les images</button>
                 </form>
             <?php endif; ?>
+
+        </section>
+
+        <div class="page-action-end">
+            <a class="page-action-link" href="#haut-page">↑ Retour en haut</a>
         </div>
     </main>
 </body>

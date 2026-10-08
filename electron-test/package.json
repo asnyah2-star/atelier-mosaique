@@ -1,0 +1,13 @@
+{
+  "name": "atelier-mosaique-electron-test",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Fenêtre Electron temporaire pour tester l'application locale servie par WampServer",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "latest"
+  }
+}

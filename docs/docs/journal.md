@@ -127,6 +127,23 @@ reste à essayer dans le navigateur. Les actions « Retour en haut » et
 « Supprimer toutes les images » flottent maintenant en bas à droite ; sur petit
 écran, elles s'empilent. Cette disposition reste à vérifier dans le navigateur.
 
+Le 8 octobre, Hasnia a souhaité essayer temporairement l'application dans
+Electron. Node.js était déjà installé sur son ordinateur (v24.21.0, npm
+11.19.0). Electron, lui, a été téléchargé par npm dans le nouveau dossier
+`electron-test/` du projet (version 44.7.0) ; Electron Fiddle n'a pas été
+installé. Le lanceur `electron-test/main.cjs` ouvre
+`http://localhost/atelier-mosaique/public/` dans une fenêtre Electron, qui
+utilise Chromium intégré. WampServer est resté chargé de PHP et MySQL. Hasnia a
+vu l'accueil s'afficher correctement dans cette fenêtre. Le test a utilisé la
+configuration locale existante et la base configurée pour l'application ; il
+n'a pas testé la copie `atelier_mosaique_reprise` ni validé la reprise de
+mission 9. Aucun fichier PHP ni réglage local n'a été changé pour cet essai.
+Electron reste un outil d'essai séparé ; l'application reste un site PHP/MySQL.
+Pour refaire l'essai, démarrer WampServer, ouvrir PowerShell dans
+`electron-test/`, ajouter temporairement `C:\Program Files\nodejs` au `PATH`,
+retirer `ELECTRON_RUN_AS_NODE` de l'environnement de cette fenêtre PowerShell,
+puis lancer `npm start`. Fermer la fenêtre Electron pour terminer l'essai.
+
 ## Ce qui me bloque
 
 Aucun blocage particulier. Pour que l'export reflète une nouvelle largeur ou
