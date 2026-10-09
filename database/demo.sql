@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 08 oct. 2026 à 13:52
+-- Généré le : jeu. 08 oct. 2026 à 14:18
 -- Version du serveur : 8.4.7
 -- Version de PHP : 8.3.28
 
@@ -21,8 +21,7 @@ SET time_zone = "+00:00";
 -- Base de données : `atelier_mosaique_demo`
 --
 
--- --------------------------------------------------------
-
+--
 --
 -- Structure de la table `images`
 --
@@ -41,14 +40,16 @@ CREATE TABLE IF NOT EXISTS `images` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_images_storage_name` (`project_id`,`storage_name`),
   KEY `idx_images_project_id` (`project_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `images`
 --
 
 INSERT INTO `images` (`id`, `project_id`, `original_name`, `storage_name`, `mime_type`, `size_bytes`, `width`, `height`, `created_at`) VALUES
-(1, 1, 'mosaic_1400x900_m-0_mode-normal_seed-1790255348033_gap-8_rad-12_bg-000000.png', 'd89f4a8da304b91afafe1cbf1db047ef.png', 'image/png', 1578268, 1400, 900, '2026-10-08 13:50:52');
+(1, 1, 'mosaic_1400x900_m-0_mode-normal_seed-1790255348033_gap-8_rad-12_bg-000000.png', 'd89f4a8da304b91afafe1cbf1db047ef.png', 'image/png', 1578268, 1400, 900, '2026-10-08 13:50:52'),
+(2, 1, 'question5.png', '67be01cbde55d566846559d86f5502dc.png', 'image/png', 144854, 871, 863, '2026-10-08 14:14:46'),
+(3, 2, 'mosaic_1000x800_m-0_mode-aere_seed-1790257445800_gap-8_rad-12_bg-12121a.png', '9e50a5a75b95c58bafc37bbab000ae7b.png', 'image/png', 1293323, 1000, 800, '2026-10-08 14:15:41');
 
 -- --------------------------------------------------------
 
