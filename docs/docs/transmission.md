@@ -25,22 +25,23 @@ intégré au PHP de WampServer ; Apache sert notamment l'accès à phpMyAdmin.
 
 | Élément | Valeur vérifiée |
 | --- | --- |
-| Windows 11 / WampServer | `[versions]` |
-| Dossier de WampServer | `C:\wamp64` ou `[chemin réel]` |
-| PHP 8.x | `[version exacte]` |
-| Exécutable PHP utilisé | `[chemin complet du php.exe relevé en mission 2]` |
-| Configuration de ce PHP | `[fichier indiqué par --ini]` |
-| Serveur SQL | `MySQL ; [version]` ou adaptation MariaDB vérifiée ensemble |
-| Hôte et port du serveur SQL retenu | `127.0.0.1 ; [port vérifié dans WampServer]` |
-| Nom de la base locale | `atelier_mosaique` ou `[nom réellement choisi]` |
-| phpMyAdmin et navigateur | `[versions]` |
+| Windows / WampServer | Windows 11 ; WampServer `3.4.0` 64 bits |
+| Dossier de WampServer | `C:\wamp64` |
+| PHP 8.x | `8.3.28` (vérifiée dans la page de l'application le 9 octobre 2026) |
+| PHP qui exécute l'application | PHP de WampServer `8.3.28`, exécuté par Apache |
+| Configuration PHP utilisée par Apache | `[chemin du php.ini web à relever dans WampServer]` |
+| Serveur SQL | `MySQL 8.4.7` (version relevée dans phpMyAdmin) |
+| Hôte et port du serveur SQL retenu | `127.0.0.1 ; 3306` |
+| Nom de la base locale | `atelier_mosaique_demo` pour les données de démonstration ; `atelier_mosaique_demo_verification` pour le test d'import |
+| phpMyAdmin et navigateur | `phpMyAdmin 5.2.3 ; Firefox et Microsoft Edge (versions à relever)` |
 | jQuery | `4.0.0 complète proposée ; [version réellement utilisée]` |
 | Fichier jQuery local et provenance | `public/assets/js/vendor/jquery-4.0.0.min.js` après mission 3 ; site officiel jQuery, licence conservée |
 | Extensions GD, PDO MySQL, Fileinfo | `[présentes ; formats GD essayés]` |
 | Limites d'envoi et dimensions d'image retenues | `[valeurs applicatives et limites PHP compatibles]` |
-| Dossier local du dépôt | `C:\Projets\atelier-mosaique` ou `[chemin réel]` |
-| Racine web | `[chemin du dépôt]\public` uniquement |
-| Adresse locale de l'application | `[adresse définie ensemble à la mission 2]` |
+| Dossier local du dépôt | `C:\wamp64\www\atelier-mosaique` |
+| Copie de test utilisée | `C:\wamp64\www\atelier-mosaique-reprise` |
+| Racine web testée | `C:\wamp64\www\atelier-mosaique-reprise\public` |
+| Adresse locale de l'application testée | `http://localhost/atelier-mosaique-reprise/public/` |
 | Accès local à phpMyAdmin | `[adresse locale]` |
 
 Les mots de passe n'ont pas leur place ici, même dans un dépôt privé. Garde `config/config.local.php` hors de Git.
