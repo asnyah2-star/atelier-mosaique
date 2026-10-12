@@ -1,4 +1,9 @@
-# Guide de transmission — À compléter
+# Guide de transmission — Suivi de la livraison
+
+La procédure actuelle est dans le [guide d’installation](installation.md), et le
+[déroulé de présentation](presentation.md) prépare la démonstration. Ce document
+conserve les informations relevées et les résultats de la reprise. Les champs
+restants ne constituent pas des validations.
 
 Complète ce document au fil des missions. Je m'en servirai pour lancer ton
 application sur mon ordinateur et vérifier que les indications suffisent à la
@@ -55,7 +60,10 @@ Voici la procédure que je suivrai. Complète-la si ton application demande une 
 3. Je démarrerai les services de mon environnement local : Apache pour phpMyAdmin et le serveur SQL retenu. Sur Windows, j'utiliserai WampServer. Je reprendrai le lancement décrit en [mission 2](missions/02-demarrage.md) en adaptant les chemins de PHP et du dépôt à mon ordinateur. Le serveur PHP local exposera seulement `public/` ; `src/`, `config/`, `database/` et `storage/` resteront hors de l'accès web direct.
 4. Je copierai `config/config.example.php` en `config/config.local.php` si cette copie n'existe pas encore, puis j'adapterai les valeurs à mon ordinateur. Le modèle vise MySQL dans WampServer : hôte `127.0.0.1`, port proposé `3306`, base `atelier_mosaique` et accès initiaux locaux à vérifier. Mon environnement peut utiliser d'autres valeurs ; je conserverai ses réglages existants et adapterai seulement la copie locale. Nous échangerons les accès séparément si nécessaire ; ils ne doivent pas figurer dans ce guide.
 
-À préciser avec ton code final : `[où et comment l'application charge la configuration locale ; message attendu si elle manque]`.
+`src/connexion.php` charge `config/config.local.php`. Si ce fichier manque,
+l’application indique de copier le modèle et de renseigner les accès. Si la
+connexion MySQL échoue, elle indique de vérifier le service, la base, le port et
+les accès, sans afficher le mot de passe.
 
 Après les missions 3 et 5, vérifie aussi que le fichier jQuery local est bien
 suivi dans Git et récupéré avec le code. La page doit charger les scripts avec

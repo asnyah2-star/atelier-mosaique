@@ -140,8 +140,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($nom === '') {
             $erreur = 'Saisis un nom pour le projet.';
-        } elseif (mb_strlen($nom, 'UTF-8') > 150) {
-            $erreur = 'Le nom ne peut pas dépasser 150 caractères.';
+        } elseif (mb_strlen($nom, 'UTF-8') > 120) {
+            $erreur = 'Le nom ne peut pas dépasser 120 caractères.';
         }
     }
 
