@@ -1,6 +1,19 @@
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path $PSScriptRoot -Parent
-$phpSource = 'C:\wamp64\bin\php\php8.3.28'
+$runtimeSpec = Get-Content -LiteralPath (Join-Path $projectRoot 'electron-test/php-runtime.json') -Raw | ConvertFrom-Json
+$archiveRoot = Join-Path $projectRoot 'backups'
+New-Item -ItemType Directory -Path $archiveRoot -Force | Out-Null
+$archivePhp = Join-Path $archiveRoot ('php-' + $runtimeSpec.version + '-nts-x64.zip')
+if (-not (Test-Path -LiteralPath $archivePhp)) {
+    Invoke-WebRequest -Uri $runtimeSpec.url -OutFile $archivePhp -UseBasicParsing
+}
+if ((Get-FileHash -LiteralPath $archivePhp -Algorithm SHA256).Hash.ToLowerInvariant() -ne $runtimeSpec.sha256) {
+    throw 'Empreinte SHA256 PHP incorrecte.'
+}
+$phpSource = Join-Path $archiveRoot ('php-source-' + $runtimeSpec.version)
+if (-not (Test-Path -LiteralPath $phpSource)) {
+    Expand-Archive -LiteralPath $archivePhp -DestinationPath $phpSource
+}
 $runtimeRoot = Join-Path $projectRoot 'electron-test\runtime\php'
 if (Test-Path -LiteralPath $runtimeRoot) { throw 'La copie PHP existe déjà ; aucun fichier ne sera écrasé.' }
 New-Item -ItemType Directory -Path (Join-Path $runtimeRoot 'ext') -Force | Out-Null

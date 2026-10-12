@@ -4,7 +4,7 @@ const http = require('node:http');
 const { randomBytes } = require('node:crypto');
 const path = require('node:path');
 
-async function startServer(php, root, router, ini) {
+async function startServer(php, root, router, ini, dataDir) {
   const port = await new Promise((resolve, reject) => {
     const socket = net.createServer();
     socket.once('error', reject);
@@ -16,11 +16,12 @@ async function startServer(php, root, router, ini) {
   const secret = randomBytes(32).toString('hex');
   const origin = `http://127.0.0.1:${port}`;
   const phpArgs = ini ? ['-c', ini] : [];
+  if (dataDir) phpArgs.push('-d', `session.save_path=${path.join(dataDir, 'sessions')}`, '-d', `upload_tmp_dir=${path.join(dataDir, 'tmp')}`);
   const child = spawn(php, [...phpArgs, '-S', `127.0.0.1:${port}`, '-t', root, router], {
     cwd: path.dirname(php),
     windowsHide: true,
     stdio: ['ignore', 'ignore', 'pipe'],
-    env: { ...process.env, ATELIER_SESSION_SECRET: secret },
+    env: { ...process.env, ATELIER_SESSION_SECRET: secret, ...(dataDir ? { ATELIER_DATA_DIR: dataDir } : {}) },
   });
   // Drain PHP's error stream; never expose paths or local data in the UI.
   child.stderr.on('data', () => {});

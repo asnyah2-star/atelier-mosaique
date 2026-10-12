@@ -5,6 +5,12 @@ La procédure actuelle est dans le [guide d’installation](installation.md), et
 conserve les informations relevées et les résultats de la reprise. Les champs
 restants ne constituent pas des validations.
 
+Depuis le 12 octobre 2026, une version Windows autonome 1.0.1 est également
+disponible. Pour cette livraison, suivre le [guide autonome](installation-autonome.md).
+Les étapes MySQL ci-dessous concernent la version web historique. La version
+autonome et son export PNG ont été testés sur le PC de Hasnia avec Wamp fermé ;
+la recette sur une machine vierge reste ouverte.
+
 Complète ce document au fil des missions. Je m'en servirai pour lancer ton
 application sur mon ordinateur et vérifier que les indications suffisent à la
 reprendre. Le canevas fourni ne contient pas encore les fonctionnalités ni le

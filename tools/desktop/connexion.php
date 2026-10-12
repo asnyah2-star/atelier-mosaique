@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
 
-$base = dirname(__DIR__) . '/storage/atelier.sqlite';
+$donnees = getenv('ATELIER_DATA_DIR') ?: dirname(__DIR__) . '/storage';
+$base = $donnees . '/atelier.sqlite';
 if (!is_file($base)) {
     http_response_code(503);
     exit('La base SQLite locale est absente.');

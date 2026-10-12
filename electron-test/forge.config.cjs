@@ -1,6 +1,9 @@
 module.exports = {
+  outDir: 'out-autonomous',
   packagerConfig: {
     asar: true,
+    extraResource: ['runtime', 'desktop-bundle'],
+    ignore: [/^\/runtime(?:\/|$)/, /^\/desktop-bundle(?:\/|$)/, /^\/out(?:\/|$)/, /^\/out-autonomous(?:\/|$)/],
   },
   makers: [
     {
