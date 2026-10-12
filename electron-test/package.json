@@ -5,9 +5,10 @@
   "productName": "AtelierMosaiqueElectronTest",
   "author": "Atelier Mosaïque",
   "description": "Fenêtre Electron temporaire pour tester l'application locale servie par WampServer",
-  "main": "main.cjs",
+  "main": "main-autonomous.cjs",
   "scripts": {
     "start": "electron-forge start",
+    "start:sqlite": "electron .",
     "package": "electron-forge package",
     "make": "electron-forge make"
   },

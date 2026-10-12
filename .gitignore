@@ -7,3 +7,10 @@
 # Images envoyées par les utilisatrices : ne pas les versionner.
 /storage/projects/*
 !/storage/projects/.gitkeep
+
+# Copies locales pour préparer la version autonome (base et images).
+/storage/desktop-test/
+
+# Sauvegardes privées contenant SQL et images.
+/backups/
+/desktop-preview/
