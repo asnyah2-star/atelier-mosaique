@@ -1,7 +1,7 @@
 {
   "name": "atelier-mosaique-electron-test",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "productName": "AtelierMosaiqueElectronTest",
   "author": "Atelier Mosaïque",
   "description": "Fenêtre Electron temporaire pour tester l'application locale servie par WampServer",
@@ -15,7 +15,7 @@
   "devDependencies": {
     "@electron-forge/cli": "^8.0.1",
     "@electron-forge/maker-squirrel": "^8.0.1",
-    "electron": "latest"
+    "electron": "44.7.0"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1"

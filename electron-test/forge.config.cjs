@@ -1,9 +1,12 @@
 module.exports = {
   outDir: 'out-autonomous',
+  hooks: {
+    prePackage: async () => require('./prepare-bundle.cjs').prepareBundle(),
+  },
   packagerConfig: {
     asar: true,
     extraResource: ['runtime', 'desktop-bundle'],
-    ignore: [/^\/runtime(?:\/|$)/, /^\/desktop-bundle(?:\/|$)/, /^\/out(?:\/|$)/, /^\/out-autonomous(?:\/|$)/],
+    ignore: [/^\/runtime(?:\/|$)/, /^\/desktop-bundle(?:-|\/|$)/, /^\/out(?:\/|$)/, /^\/out-autonomous(?:\/|$)/],
   },
   makers: [
     {
