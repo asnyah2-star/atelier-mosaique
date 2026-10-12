@@ -1,5 +1,11 @@
 # Version Windows autonome — recette en cours
 
+Dernière livraison : **1.0.3**. Hasnia a confirmé le bon fonctionnement de
+l’aperçu et de l’export PNG après cette mise à jour de sécurité. Le dossier
+prêt à transmettre est `backups/livraison-responsable-1.0.3/`, avec le Setup,
+les notices et l’empreinte SHA256. Les mentions 1.0.2 ci-dessous décrivent
+les étapes de construction précédemment vérifiées.
+
 La [revue de livraison](revue-livraison.md) rassemble les résultats, les contrôles
 refaits et les points à terminer avant transmission au responsable.
 
@@ -71,12 +77,23 @@ La préparation automatique lit les fichiers de `public/` suivis dans Git,
 applique les adaptations SQLite, et crée une base vide depuis le schéma suivi.
 L’ancien `desktop-bundle`, s’il existe, est déplacé dans `backups/`.
 Le lockfile et la version Electron explicite fixent les dépendances. Une
-reconstruction intégrale depuis un clone neuf reste à tester ; cela ne garantit
+reconstruction intégrale depuis un clone neuf a été vérifiée sur le PC de Hasnia
+le 12 octobre 2026, au commit `be872d9` : `npm ci`, préparation de PHP officiel,
+création du paquet et du Setup ont réussi sans configuration MySQL,
+`desktop-preview` ou données de test. Cela ne garantit
 pas une archive binaire identique octet pour octet.
+
+Hasnia a également confirmé que la mise à jour installée 1.0.2 conserve les
+projets et réglages existants. Le test sur un Windows vierge reste ouvert.
 
 Pour sauvegarder cette version, fermer l’application puis copier ensemble
 `atelier.sqlite` et `projects/`. Les exports SQL MySQL concernent la version
 web historique ; ils ne remplacent pas une sauvegarde des données SQLite.
+
+Une restauration isolée du ZIP SQLite avant mise à jour a été vérifiée le
+12 octobre 2026 : base intègre, trois projets et trois images conformes,
+pages et miniatures accessibles avec le paquet 1.0.2. Les données de
+l’application installée ont été laissées intactes.
 
 ## Protection et validations restantes
 
@@ -89,7 +106,9 @@ pas une certification de sécurité.
 - [x] Installation réelle du Setup et ouverture depuis le raccourci, confirmées par Hasnia.
 - [x] Réouverture et conservation des données après installation, confirmées par Hasnia.
 - [x] Export PNG depuis l’application installée, confirmé par Hasnia.
-- [ ] Arrêt du processus PHP après fermeture confirmé.
+- [x] Arrêt du processus PHP après fermeture confirmé : après fermeture de l’application installée par Hasnia le 12 octobre 2026, aucun processus `php`, `php-cgi` ou `php-win` actif n’a été retrouvé.
 - [ ] Installation sur un Windows sans Wamp, PHP, Node ou npm.
-- [ ] Vérification du prérequis Visual C++, des mises à jour et des sauvegardes.
+- [x] Mises à jour sur le PC de Hasnia : conservation des projets, images et réglages confirmée lors des essais consignés.
+- [x] Sauvegarde SQLite : restauration dans un dossier isolé vérifiée, avec intégrité de la base et accès aux trois projets et trois images.
+- [ ] Prérequis Visual C++ x64 : lien officiel fourni ; installation du prérequis et fonctionnement de l’application sur un Windows vierge restent à vérifier.
 - [ ] Revue finale sécurité, versions embarquées et licences avant livraison.

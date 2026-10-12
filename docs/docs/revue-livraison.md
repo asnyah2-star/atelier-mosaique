@@ -40,7 +40,33 @@ de l’application installée et l’absence de processus résiduel restent à o
 ensemble. L’audit npm de production effectué précédemment ne signalait aucun avis
 connu ; il ne couvre pas PHP, les outils de construction ou tout le code applicatif.
 
+Contrôle complémentaire effectué après fermeture de l’application installée
+par Hasnia : aucun processus `php`, `php-cgi` ou `php-win` actif retrouvé.
+Le point de recette concernant l’arrêt après fermeture est désormais validé.
+
 ## Travaux à terminer dans l’ordre
+
+Revue des protections et notices (version 1.0.3 en cours de recette) : ajout
+d’une CSP limitant les scripts à l’origine locale, interdisant objets, base HTML
+et intégration en iframe ; styles inline conservés pour le rendu dynamique de
+la mosaïque. Ajout de `Referrer-Policy: no-referrer` et refus explicite des
+vérifications de permissions Electron. Présence de la CSP vérifiée sur la
+réponse HTTP de l’accueil du paquet. Les notices PHP et Chromium/Electron
+étaient présentes ; les textes complets jQuery et electron-squirrel-startup
+ont été ajoutés au paquet. Cela ne constitue pas une expertise juridique de
+toutes les bibliothèques natives ni une certification de sécurité.
+Hasnia a confirmé que le test demandé après installation 1.0.3 est réussi :
+aperçu et export PNG corrects. La livraison 1.0.3 a ensuite été préparée dans
+un nouveau dossier, avec notices actualisées et SHA256 du nouvel installateur.
+
+Restauration SQLite vérifiée le 12 octobre 2026 : le ZIP privé
+`avant-maj-1.0.1-20261012-132358.zip` a été extrait dans un dossier isolé.
+Intégrité SQLite et liens entre tables valides ; trois projets et trois images
+présents. Taille et MIME des fichiers conformes aux informations de la base.
+Avec le code du paquet 1.0.2 et PHP intégré, l’accueil, les trois pages projet
+et les trois miniatures répondent HTTP 200. Le serveur de test a ensuite été
+arrêté ; les données installées n’ont pas été remplacées. Ce contrôle valide
+cette sauvegarde SQLite ; la restauration du ZIP MySQL historique reste ouverte.
 
 1. **Construction reproductible** : `prepare-bundle.cjs` lit encore le dossier
    ignoré `desktop-preview`, créé lors des essais. La préparation SQLite initiale
@@ -53,7 +79,12 @@ connu ; il ne couvre pas PHP, les outils de construction ou tout le code applica
    Correction réalisée pour 1.0.2 : préparation automatique depuis `public/`
    suivi dans Git, schéma SQLite suivi, base vide, PHP officiel vérifié et
    Electron fixé à 44.7.0. La construction du paquet et son accueil vide ont été
-   vérifiés. Le contrôle depuis un clone neuf reste à réaliser.
+   vérifiés. Le contrôle depuis un clone neuf du commit `be872d9` a ensuite réussi
+   le 12 octobre 2026 sur ce PC : installation des dépendances par `npm ci`,
+   préparation du PHP officiel, construction du paquet et du Setup. Aucun dossier
+   `desktop-preview`, configuration MySQL ou jeu de test local n’était présent.
+   Les trois pages PHP, la connexion et le routeur ont un contenu identique à
+   ceux du paquet précédent après normalisation des fins de ligne.
 2. **Livraison** : fournir Setup, SHA256, notice courte et lien officiel du
    prérequis Visual C++ x64. Le Setup actuel n’est pas signé et n’installe pas
    ce prérequis automatiquement.

@@ -1,7 +1,7 @@
 {
   "name": "atelier-mosaique-electron-test",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "productName": "AtelierMosaiqueElectronTest",
   "author": "Atelier Mosaïque",
   "description": "Fenêtre Electron temporaire pour tester l'application locale servie par WampServer",

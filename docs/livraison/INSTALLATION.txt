@@ -1,0 +1,45 @@
+MON ATELIER DE MOSAÏQUES — VERSION WINDOWS 1.0.3
+
+Livraison de test pour le responsable de stage.
+Cible : Windows 10/11 x64. Installation sur Windows vierge à vérifier.
+
+1. PRÉREQUIS
+Installer le composant Microsoft Visual C++ v14 x64 depuis le lien officiel :
+https://aka.ms/vc14/vc_redist.x64.exe
+Il peut déjà être présent ; suivre les indications de l'installateur Microsoft.
+Ne pas désinstaller les autres versions de Visual C++.
+Documentation officielle :
+https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
+
+2. INSTALLATION
+Fermer toute fenêtre AtelierMosaiqueElectronTest déjà ouverte.
+Lancer AtelierMosaiqueElectronTest-1.0.3 Setup.exe.
+Après installation, rechercher AtelierMosaiqueElectronTest dans Windows.
+Wamp, MySQL, Node/npm et VS Code ne sont pas nécessaires pour utiliser l'application.
+Le Setup n'est pas signé : si Windows le bloque, relever le message et vérifier
+la provenance du fichier ; ne pas désactiver les protections Windows.
+
+3. PREMIÈRE UTILISATION
+Une nouvelle installation démarre sans projet et sans image.
+Créer un projet, puis ajouter une image JPEG ou PNG autorisée.
+Limites : 5 Mio par image, 6 000 pixels par côté et 20 millions de pixels.
+Générer l'aperçu, enregistrer les réglages puis exporter le PNG.
+Une mise à jour conserve les données déjà présentes.
+
+4. SAUVEGARDE
+Fermer l'application. Ouvrir ce chemin dans l'Explorateur Windows :
+%APPDATA%\AtelierMosaiqueElectronTest\data
+Copier ensemble atelier.sqlite et le dossier projects sur un autre support.
+La base seule ne contient pas les pixels des images.
+Pour une restauration, fermer l'application et sauvegarder les données actuelles
+avant tout remplacement. Ne jamais mélanger une base avec des images d'une
+autre sauvegarde. La procédure de restauration complète reste à valider.
+
+5. EN CAS DE PROBLÈME
+Noter le message exact, l'étape, la version Windows et si Visual C++ a été installé.
+Ne pas effacer le dossier de données. Joindre les résultats de RECETTE.txt.
+Le fichier SHA256SUMS.txt permet de vérifier l'intégrité du Setup transmis.
+
+État : installation/mises à jour et PNG validés sur le PC de Hasnia avec Wamp
+fermé ; reconstruction depuis un clone neuf validée sur ce même PC.
+La compatibilité d'installation sur une autre machine reste à vérifier.

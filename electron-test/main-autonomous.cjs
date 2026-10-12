@@ -36,6 +36,7 @@ if (require('electron-squirrel-startup') || !app.requestSingleInstanceLock()) {
         callback({ cancel: new URL(details.url).origin !== server.origin });
       });
       session.defaultSession.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
+      session.defaultSession.setPermissionCheckHandler(() => false);
       const window = new BrowserWindow({
         width: 1280, height: 900,
         webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true },

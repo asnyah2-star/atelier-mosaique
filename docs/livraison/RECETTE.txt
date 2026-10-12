@@ -1,0 +1,27 @@
+RECETTE DU RESPONSABLE — MON ATELIER DE MOSAÏQUES 1.0.3
+
+Date :
+Personne :
+Version Windows / architecture :
+Wamp/PHP/Node déjà présents sur ce PC :
+Visual C++ x64 présent ou installé pendant ce test :
+
+Cocher après observation ; noter le message exact en cas d'échec.
+
+[ ] Le Setup termine et un raccourci permet d'ouvrir l'application.
+[ ] Une première installation affiche un accueil vide compréhensible.
+[ ] Un projet peut être créé et renommé.
+[ ] Une image JPEG ou PNG apparaît dans la galerie.
+[ ] La mosaïque se génère ; un PNG téléchargé peut être ouvert.
+[ ] Les réglages et images restent présents après fermeture/réouverture.
+[ ] Une image de test peut être retirée après confirmation.
+[ ] Un projet de test peut être archivé puis restauré.
+[ ] Le dossier de sauvegarde indiqué dans INSTALLATION.txt est accessible.
+[ ] La fermeture de l'application ne laisse pas son serveur PHP actif.
+
+Résultat global :
+Problèmes rencontrés / étapes et messages :
+Précisions manquantes dans les instructions :
+
+Utiliser uniquement des images autorisées et un projet de test pour les
+opérations de suppression. Ce test ne certifie pas l'absence de faille.

@@ -16,6 +16,8 @@ for (const file of files) {
 }
 fs.copyFileSync(path.join(source, 'tools/desktop/router.php'), path.join(staging, 'router.php'));
 fs.copyFileSync(path.join(source, 'tools/desktop/connexion.php'), path.join(staging, 'src/connexion.php'));
+fs.cpSync(path.join(__dirname, 'licenses'), path.join(staging, 'licenses'), { recursive: true });
+fs.copyFileSync(path.join(source, 'public/assets/js/vendor/jquery-LICENSE.txt'), path.join(staging, 'licenses/jquery-LICENSE.txt'));
 for (const file of ['index.php', 'projet.php', 'image.php']) {
   const location = path.join(staging, 'public', file);
   let content = fs.readFileSync(location, 'utf8').replaceAll("dirname(__DIR__) . '/storage/projects/'", "(getenv('ATELIER_DATA_DIR') ?: dirname(__DIR__) . '/storage') . '/projects/'");
