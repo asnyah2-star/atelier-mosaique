@@ -35,6 +35,13 @@ PC est réussi : accueil initial vide, création de projet, ajout d'image,
 réglages, export PNG et conservation après fermeture et réouverture.
 Le test sur une autre machine Windows sans les outils de développement reste
 à réaliser.
+Le dossier `backups/livraison-responsable-1.0.4/` a été préparé pour ce test :
+Setup 1.0.4, empreinte `.exe.sha256`, `INSTALLATION.txt` et `RECETTE.txt`.
+L'empreinte du Setup copié a été comparée à celle de la sortie de construction.
+Copier ce dossier sur la machine cible et suivre la notice ; compléter la fiche
+de recette après observation. Conserver dossiers, bases MySQL et sauvegardes
+existants jusqu'à la validation de cette installation externe, selon la décision
+de Hasnia.
 L'ancienne application peut ensuite être désinstallée depuis les paramètres
 Windows ; renommer son raccourci ne modifie pas son identité ni ses données.
 
