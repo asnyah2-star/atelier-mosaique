@@ -1,10 +1,10 @@
 {
-  "name": "atelier-mosaique-electron-test",
+  "name": "atelier-mosaique",
   "private": true,
-  "version": "1.0.3",
-  "productName": "AtelierMosaiqueElectronTest",
+  "version": "1.0.4",
+  "productName": "atelier-mosaique",
   "author": "Atelier Mosaïque",
-  "description": "Fenêtre Electron temporaire pour tester l'application locale servie par WampServer",
+  "description": "Application autonome de création de mosaïques",
   "main": "main-autonomous.cjs",
   "scripts": {
     "start": "electron-forge start",

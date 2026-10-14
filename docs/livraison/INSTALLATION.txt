@@ -1,4 +1,4 @@
-MON ATELIER DE MOSAÏQUES — VERSION WINDOWS 1.0.3
+ATELIER-MOSAIQUE — VERSION WINDOWS 1.0.4
 
 Livraison de test pour le responsable de stage.
 Cible : Windows 10/11 x64. Installation sur Windows vierge à vérifier.
@@ -12,9 +12,9 @@ Documentation officielle :
 https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
 
 2. INSTALLATION
-Fermer toute fenêtre AtelierMosaiqueElectronTest déjà ouverte.
-Lancer AtelierMosaiqueElectronTest-1.0.3 Setup.exe.
-Après installation, rechercher AtelierMosaiqueElectronTest dans Windows.
+Fermer toute fenêtre de l'application déjà ouverte.
+Lancer atelier-mosaique-1.0.4 Setup.exe.
+Après installation, rechercher atelier-mosaique dans Windows.
 Wamp, MySQL, Node/npm et VS Code ne sont pas nécessaires pour utiliser l'application.
 Le Setup n'est pas signé : si Windows le bloque, relever le message et vérifier
 la provenance du fichier ; ne pas désactiver les protections Windows.
@@ -24,11 +24,14 @@ Une nouvelle installation démarre sans projet et sans image.
 Créer un projet, puis ajouter une image JPEG ou PNG autorisée.
 Limites : 5 Mio par image, 6 000 pixels par côté et 20 millions de pixels.
 Générer l'aperçu, enregistrer les réglages puis exporter le PNG.
-Une mise à jour conserve les données déjà présentes.
+Les projets créés sont conservés après fermeture et réouverture.
+Cette version renommée est distincte d'AtelierMosaiqueElectronTest et ne reprend
+pas ses anciens projets. Les projets créés sur le PC de développement ne sont
+pas inclus dans le Setup transmis.
 
 4. SAUVEGARDE
 Fermer l'application. Ouvrir ce chemin dans l'Explorateur Windows :
-%APPDATA%\AtelierMosaiqueElectronTest\data
+%APPDATA%\atelier-mosaique\data
 Copier ensemble atelier.sqlite et le dossier projects sur un autre support.
 La base seule ne contient pas les pixels des images.
 Pour une restauration, fermer l'application et sauvegarder les données actuelles
@@ -38,8 +41,11 @@ autre sauvegarde. La procédure de restauration complète reste à valider.
 5. EN CAS DE PROBLÈME
 Noter le message exact, l'étape, la version Windows et si Visual C++ a été installé.
 Ne pas effacer le dossier de données. Joindre les résultats de RECETTE.txt.
-Le fichier SHA256SUMS.txt permet de vérifier l'intégrité du Setup transmis.
+Le fichier atelier-mosaique-1.0.4 Setup.exe.sha256 permet de vérifier
+l'intégrité du Setup transmis ; ce fichier ne lance pas l'installation.
 
-État : installation/mises à jour et PNG validés sur le PC de Hasnia avec Wamp
-fermé ; reconstruction depuis un clone neuf validée sur ce même PC.
+État au 14 octobre 2026 : Hasnia a confirmé le test de la version 1.0.4 sur son
+PC : installation vierge, projet, image, réglages, PNG et conservation après
+réouverture. La reconstruction depuis un clone neuf a été validée précédemment
+sur ce même PC pour la version 1.0.2.
 La compatibilité d'installation sur une autre machine reste à vérifier.

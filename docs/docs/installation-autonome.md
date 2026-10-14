@@ -1,6 +1,44 @@
 # Version Windows autonome — recette en cours
 
-Dernière livraison : **1.0.3**. Hasnia a confirmé le bon fonctionnement de
+## Renommage en atelier-mosaique — 14 octobre 2026
+
+La version 1.0.4 porte le nom `atelier-mosaique` dans Windows, pour son
+exécutable et son installateur. Le dossier source `electron-test/` conserve son
+nom technique. Les indications 1.0.3 et antérieures ci-dessous sont historiques.
+
+Cette version constitue une installation distincte de l'ancienne application
+`AtelierMosaiqueElectronTest` : aucune migration des anciens projets n'est faite.
+Ses données sont normalement dans `%APPDATA%/atelier-mosaique/data`.
+Au premier lancement, une base vide est initialisée ; les lancements suivants
+conservent les projets créés dans cette nouvelle application.
+
+La construction crée et vérifie une base SQLite sans projet ni image, à partir
+du schéma suivi dans Git. Les données de l'application installée ne sont pas
+incluses dans le Setup. Il est donc inutile de supprimer les anciens projets
+pour fournir un installateur vierge à une autre personne.
+
+Après construction, le paquet est dans
+`electron-test/out-autonomous/atelier-mosaique-win32-x64/` et le Setup attendu est
+`electron-test/out-autonomous/make/squirrel.windows/x64/atelier-mosaique-1.0.4 Setup.exe`.
+Ne pas transmettre à sa place l'ancien Setup 1.0.3 du dossier de livraison.
+Construction du paquet et du Setup 1.0.4 réussie le 14 octobre 2026 ; base vide
+et intégrité SQLite vérifiées par le script de préparation. Une empreinte
+SHA256 accompagne le Setup dans le fichier `.exe.sha256`.
+
+Pour la recette : installer ce nouveau Setup, vérifier l'accueil vide, créer un
+projet avec une image, exporter un PNG, puis fermer et rouvrir l'application.
+Vérifier aussi ce cycle sur un Windows sans Wamp, PHP, Node ni npm, avec le
+prérequis Visual C++ x64.
+
+Hasnia a confirmé le 14 octobre 2026 que le test de la version 1.0.4 sur son
+PC est réussi : accueil initial vide, création de projet, ajout d'image,
+réglages, export PNG et conservation après fermeture et réouverture.
+Le test sur une autre machine Windows sans les outils de développement reste
+à réaliser.
+L'ancienne application peut ensuite être désinstallée depuis les paramètres
+Windows ; renommer son raccourci ne modifie pas son identité ni ses données.
+
+Livraison précédente (historique) : **1.0.3**. Hasnia a confirmé le bon fonctionnement de
 l’aperçu et de l’export PNG après cette mise à jour de sécurité. Le dossier
 prêt à transmettre est `backups/livraison-responsable-1.0.3/`, avec le Setup,
 les notices et l’empreinte SHA256. Les mentions 1.0.2 ci-dessous décrivent

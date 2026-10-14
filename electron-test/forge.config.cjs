@@ -13,7 +13,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         authors: 'Atelier Mosaïque',
-        description: 'Lanceur de test de l’application locale Mon atelier de mosaïques.',
+        description: 'Application autonome de création de mosaïques.',
       },
     },
   ],
